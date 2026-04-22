@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -814,7 +814,7 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;}
 <div id="loginScreen" class="screen active">
   <div class="login-box">
     <div class="login-logo">
-      <div class="badge">??</div>
+      <div class="badge">💰</div>
       <h1>Family Budget</h1>
       <p>Track your family's money together</p>
     </div>
@@ -828,7 +828,7 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;}
         <label class="lbl">Password</label>
         <input class="field" id="lp" type="password" placeholder="Enter password" autocomplete="current-password">
       </div>
-      <button class="btn btn-gold" id="loginBtn" onclick="doLogin()">Login ?</button>
+      <button class="btn btn-gold" id="loginBtn" onclick="doLogin()">Login 🔐</button>
       <div id="lmsg" class="msg-e"></div>
     </div>
   </div>
@@ -840,7 +840,7 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;}
 <div id="memberScreen" class="screen">
   <div class="member-box">
     <div class="member-box-head">
-      <h2>Who are you? ??</h2>
+      <h2>Who are you? 👤</h2>
       <p id="memScreenSub">Choose your name to continue</p>
     </div>
     <div class="member-grid" id="memberGrid">
@@ -849,7 +849,7 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;}
 
     <!-- Always-visible quick add on member screen -->
     <div class="add-member-inline">
-      <h4>? Add New Member</h4>
+      <h4>➕ Add New Member</h4>
       <div class="inline-row">
         <div>
           <label class="lbl">Name</label>
@@ -864,7 +864,7 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;}
       <div id="qmMsg" class="msg-e"></div>
     </div>
 
-    <button class="btn btn-ghost" onclick="doLogout()">? Sign Out</button>
+    <button class="btn btn-ghost" onclick="doLogout()">🚪 Sign Out</button>
   </div>
 </div>
 
@@ -878,7 +878,7 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;}
   <aside class="sidebar" id="sidebar">
     <div class="sb-top">
       <div class="sb-brand">
-        <div class="sb-badge">??</div>
+        <div class="sb-badge">💰</div>
         <div>
           <div class="sb-title" id="sbFamilyName">Family</div>
           <div class="sb-sub" id="sbFamilySub">Budget Tracker</div>
@@ -887,18 +887,18 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;}
     </div>
     <nav class="sb-nav">
       <div class="nav-section">Navigation</div>
-      <div class="nv active" id="nv-overview" onclick="goTab('overview')"><span class="nv-icon">??</span> Overview</div>
-      <div class="nv" id="nv-add" onclick="goTab('add')"><span class="nv-icon">?</span> Add Transaction</div>
-      <div class="nv" id="nv-history" onclick="goTab('history')"><span class="nv-icon">??</span> History</div>
-      <div class="nv" id="nv-charts" onclick="goTab('charts')"><span class="nv-icon">??</span> Charts</div>
-      <div class="nv" id="nv-individual" onclick="goTab('individual')"><span class="nv-icon">??</span> Individual</div>
-      <div class="nv" id="nv-logs" onclick="goTab('logs')"><span class="nv-icon">??</span> Activity Logs</div>
+      <div class="nv active" id="nv-overview" onclick="goTab('overview')"><span class="nv-icon">📊</span> Overview</div>
+      <div class="nv" id="nv-add" onclick="goTab('add')"><span class="nv-icon">➕</span> Add Transaction</div>
+      <div class="nv" id="nv-history" onclick="goTab('history')"><span class="nv-icon">📋</span> History</div>
+      <div class="nv" id="nv-charts" onclick="goTab('charts')"><span class="nv-icon">📈</span> Charts</div>
+      <div class="nv" id="nv-individual" onclick="goTab('individual')"><span class="nv-icon">🔄</span> Individual</div>
+      <div class="nv" id="nv-logs" onclick="goTab('logs')"><span class="nv-icon">📝</span> Activity Logs</div>
       <div class="nav-section">Family</div>
-      <div class="nv" id="nv-members" onclick="goTab('members')"><span class="nv-icon">??</span> Members</div>
+      <div class="nv" id="nv-members" onclick="goTab('members')"><span class="nv-icon">👥</span> Members</div>
     </nav>
     <div class="sb-footer">
       <div class="sb-user">
-        <div class="av av-32 av0" id="sbAv">?</div>
+        <div class="av av-32 av0" id="sbAv">👤</div>
         <div class="sb-user-info">
           <p id="sbCurMem">Guest</p>
           <span>Active session</span>
@@ -911,9 +911,9 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;}
 
   <!-- TOPBAR (mobile) -->
   <div class="topbar">
-    <button class="hamburger" onclick="openSb()">?</button>
+    <button class="hamburger" onclick="openSb()">☰</button>
     <span class="tb-title" id="tbTitle">Overview</span>
-    <div class="av av-32 av0" id="tbAv">?</div>
+    <div class="av av-32 av0" id="tbAv">👤</div>
   </div>
 
   <!-- MAIN -->
@@ -924,39 +924,39 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;}
       <div class="ph">
         <div><h1>Overview</h1><p id="ovSub">Monthly summary</p></div>
         <div class="month-pill">
-          <button onclick="chMonth(-1)">?</button>
-          <span id="mpLabel">?</span>
-          <button onclick="chMonth(1)">?</button>
+          <button onclick="chMonth(-1)">⬅️</button>
+          <span id="mpLabel">📅</span>
+          <button onclick="chMonth(1)">➡️</button>
         </div>
       </div>
       <div class="stats-row">
         <div class="scard scard-balance">
           <div class="scard-label"><span class="scard-dot" style="background:var(--gold)"></span>Balance</div>
-          <div class="scard-amount" id="stBal">?0</div>
+          <div class="scard-amount" id="stBal">₹0</div>
           <div class="scard-sub">Income - Expenses</div>
-          <div class="scard-bg">??</div>
+          <div class="scard-bg">⚖️</div>
         </div>
         <div class="scard scard-income">
           <div class="scard-label"><span class="scard-dot" style="background:var(--green)"></span>Income</div>
-          <div class="scard-amount" id="stInc">?0</div>
+          <div class="scard-amount" id="stInc">₹0</div>
           <div class="scard-sub" id="stIncCnt">0 transactions</div>
-          <div class="scard-bg">??</div>
+          <div class="scard-bg">💰</div>
         </div>
         <div class="scard scard-expense">
           <div class="scard-label"><span class="scard-dot" style="background:var(--red)"></span>Expenses</div>
-          <div class="scard-amount" id="stExp">?0</div>
+          <div class="scard-amount" id="stExp">₹0</div>
           <div class="scard-sub" id="stExpCnt">0 transactions</div>
-          <div class="scard-bg">??</div>
+          <div class="scard-bg">🛒</div>
         </div>
       </div>
       <div class="two-col">
         <div class="panel">
-          <div class="panel-head"><span class="panel-title">Recent Income</span><span class="badge bg-green" id="recIncTotal">?0</span></div>
-          <div id="recIncList"><div class="empty-st">??<p>No income this month</p></div></div>
+          <div class="panel-head"><span class="panel-title">Recent Income</span><span class="badge bg-green" id="recIncTotal">₹0</span></div>
+          <div id="recIncList"><div class="empty-st">💰<p>No income this month</p></div></div>
         </div>
         <div class="panel">
-          <div class="panel-head"><span class="panel-title">Recent Expenses</span><span class="badge bg-red" id="recExpTotal">?0</span></div>
-          <div id="recExpList"><div class="empty-st">??<p>No expenses this month</p></div></div>
+          <div class="panel-head"><span class="panel-title">Recent Expenses</span><span class="badge bg-red" id="recExpTotal">₹0</span></div>
+          <div id="recExpList"><div class="empty-st">🛒<p>No expenses this month</p></div></div>
         </div>
       </div>
     </div>
@@ -966,8 +966,8 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;}
       <div class="ph"><div><h1>Add Transaction</h1><p>Record income or expense</p></div></div>
       <div class="panel" style="max-width:580px">
         <div class="type-toggle">
-          <button class="tt-btn active-expense" id="ttExp" onclick="setTxType('Expense')">?? Expense</button>
-          <button class="tt-btn" id="ttInc" onclick="setTxType('Income')">?? Income</button>
+          <button class="tt-btn active-expense" id="ttExp" onclick="setTxType('Expense')">💸 Expense</button>
+          <button class="tt-btn" id="ttInc" onclick="setTxType('Income')">💰 Income</button>
         </div>
         <div class="form-grid">
           <div class="fg-item">
@@ -975,18 +975,18 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;}
             <select class="field" id="txPerson"><option value="">Select member...</option></select>
           </div>
           <div class="fg-item">
-            <label class="lbl">Amount (?)</label>
+            <label class="lbl">Amount (₹)</label>
             <input class="field" type="number" id="txAmt" placeholder="0.00" min="0" step="0.01">
           </div>
           <div class="fg-item" id="fCat">
             <label class="lbl">Category</label>
             <select class="field" id="txCat">
               <option value="">Select category...</option>
-              <option>?? Food</option><option>?? Rent / Housing</option>
-              <option>?? Utilities</option><option>?? Transport</option>
-              <option>?? Entertainment</option><option>??? Shopping</option>
-              <option>?? Health</option><option>?? Education</option>
-              <option>?? Personal Care</option><option>?? Other</option>
+              <option>🍕 Food</option><option>🏠 Rent / Housing</option>
+              <option>⚡ Utilities</option><option>🚗 Transport</option>
+              <option>🎬 Entertainment</option><option>🛍️ Shopping</option>
+              <option>🏥 Health</option><option>📚 Education</option>
+              <option>💅 Personal Care</option><option>📦 Other</option>
             </select>
           </div>
           <div class="fg-item" id="fSrc" style="display:none"><label class="lbl">Income Source</label><select class="field" id="txSrc"><option value="">Select income source...</option></select></div>
@@ -999,7 +999,7 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;}
             <input class="field" id="txRem" placeholder="Any notes...">
           </div>
         </div>
-        <button class="btn btn-gold" style="margin-top:10px" onclick="submitTx()">Add Transaction ?</button>
+        <button class="btn btn-gold" style="margin-top:10px" onclick="submitTx()">Add Transaction ✅</button>
         <div id="txMsg" class="msg-e"></div>
       </div>
     </div>
@@ -1010,9 +1010,9 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;}
       <div class="panel">
         <div class="fbar">
           <div class="month-pill">
-            <button onclick="chMonth(-1)">?</button>
-            <span id="hmpLabel">?</span>
-            <button onclick="chMonth(1)">?</button>
+            <button onclick="chMonth(-1)">⬅️</button>
+            <span id="hmpLabel">📅</span>
+            <button onclick="chMonth(1)">➡️</button>
           </div>
           <select class="fsel" id="hfType" onchange="renderHist()"><option value="">All Types</option><option>Income</option><option>Expense</option></select>
           <select class="fsel" id="hfMem" onchange="renderHist()"><option value="">All Members</option></select>
@@ -1036,23 +1036,23 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;}
       <div class="ph"><div><h1>Charts</h1><p>Visual analysis</p></div></div>
       <div class="chart-filters">
         <div class="month-pill">
-          <button onclick="chMonth(-1)">?</button>
-          <span id="cmpLabel">?</span>
-          <button onclick="chMonth(1)">?</button>
+          <button onclick="chMonth(-1)">⬅️</button>
+          <span id="cmpLabel">📅</span>
+          <button onclick="chMonth(1)">➡️</button>
         </div>
         <select class="fsel" id="cfMem" onchange="renderCharts()"><option value="">All Members</option></select>
       </div>
       <div class="charts-grid">
         <div class="chart-card">
-          <h3>?? Expense by Category</h3>
+          <h3>📊 Expense by Category</h3>
           <canvas id="cPie"></canvas>
         </div>
         <div class="chart-card">
-          <h3>?? Spending by Member</h3>
+          <h3>👥 Spending by Member</h3>
           <canvas id="cBar"></canvas>
         </div>
         <div class="chart-card full">
-          <h3>?? Income vs Expense ? Last 6 Months</h3>
+          <h3>📈 Income vs Expense • Last 6 Months</h3>
           <canvas id="cLine"></canvas>
         </div>
       </div>
@@ -1075,7 +1075,7 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;}
       <div class="ph"><div><h1>Members</h1><p>Manage family members</p></div></div>
       <div class="mem-cards" id="memCards"><div class="empty-st"><div class="spin"></div></div></div>
       <div class="add-member-panel">
-        <h3>? Add New Member</h3>
+        <h3>👤 Add New Member</h3>
         <div class="fg">
           <label class="lbl">Full Name</label>
           <input class="field" id="nmName" placeholder="e.g. Kabir, Mom, Dad">
@@ -1084,7 +1084,7 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;}
           <label class="lbl">Role <span style="color:var(--text3);text-transform:none;font-weight:400">(optional)</span></label>
           <input class="field" id="nmRole" placeholder="e.g. Son, Mom, Dad">
         </div>
-        <button class="btn btn-gold" onclick="addMember()">Add Member ?</button>
+        <button class="btn btn-gold" onclick="addMember()">Add Member 👥</button>
         <div id="nmMsg" class="msg-e"></div>
       </div>
     </div>
@@ -1094,13 +1094,13 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;}
   <!-- BOTTOM NAV -->
   <div class="bnav">
     <div class="bnav-inner">
-      <button class="bn active" id="bn-overview" onclick="goTab('overview')"><span class="bn-ic">??</span>Overview</button>
-      <button class="bn" id="bn-add" onclick="goTab('add')"><span class="bn-ic">?</span>Add</button>
-      <button class="bn" id="bn-history" onclick="goTab('history')"><span class="bn-ic">??</span>History</button>
-      <button class="bn" id="bn-charts" onclick="goTab('charts')"><span class="bn-ic">??</span>Charts</button>
-      <button class="bn" id="bn-individual" onclick="goTab('individual')"><span class="bn-ic">??</span>Individual</button>
-      <button class="bn" id="bn-logs" onclick="goTab('logs')"><span class="bn-ic">??</span>Logs</button>
-      <button class="bn" id="bn-members" onclick="goTab('members')"><span class="bn-ic">??</span>Members</button>
+      <button class="bn active" id="bn-overview" onclick="goTab('overview')"><span class="bn-ic">📊</span>Overview</button>
+      <button class="bn" id="bn-add" onclick="goTab('add')"><span class="bn-ic">➕</span>Add</button>
+      <button class="bn" id="bn-history" onclick="goTab('history')"><span class="bn-ic">📋</span>History</button>
+      <button class="bn" id="bn-charts" onclick="goTab('charts')"><span class="bn-ic">📈</span>Charts</button>
+      <button class="bn" id="bn-individual" onclick="goTab('individual')"><span class="bn-ic">🔄</span>Individual</button>
+      <button class="bn" id="bn-logs" onclick="goTab('logs')"><span class="bn-ic">📝</span>Logs</button>
+      <button class="bn" id="bn-members" onclick="goTab('members')"><span class="bn-ic">👥</span>Members</button>
     </div>
   </div>
 </div>
@@ -1137,13 +1137,13 @@ let S = {
 };
 
 const MN = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-const CAT_IC = {'?? Food':'??','?? Rent / Housing':'??','?? Utilities':'??','?? Transport':'??','?? Entertainment':'??','??? Shopping':'???','?? Health':'??','?? Education':'??','?? Personal Care':'??','?? Other':'??','?? Salary':'??','?? Business':'??','?? Freelance':'??','?? Investment':'??','?? Gift':'??'};
+const CAT_IC = {'🍕 Food':'🍕','🏠 Rent / Housing':'🏠','⚡ Utilities':'⚡','🚗 Transport':'🚗','🎬 Entertainment':'🎬','🛍️ Shopping':'🛍️','🏥 Health':'🏥','📚 Education':'📚','💅 Personal Care':'💅','📦 Other':'📦','💰 Salary':'💰','💼 Business':'💼','💻 Freelance':'💻','📈 Investment':'📈','🎁 Gift':'🎁'};
 
 /* -- HELPERS -- */
 const $  = id => document.getElementById(id);
 const mk = (m,y) => `${y}-${String(m+1).padStart(2,'0')}`;
-const fmt = n => '?'+Number(n).toLocaleString('en-IN',{maximumFractionDigits:0});
-const ini = n => n ? n.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase() : '?';
+const fmt = n => '₹'+Number(n).toLocaleString('en-IN',{maximumFractionDigits:0});
+const ini = n => n ? n.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase() : '👤';
 const avc = i => 'av'+((i||0)%10);
 const filtByMonth = txs => txs.filter(t => t.monthKey === mk(S.month, S.year));
 
@@ -1178,7 +1178,7 @@ window.doLogin = async () => {
   const msg   = $('lmsg');
   const btn   = $('loginBtn');
   if (!email || !pass) { msg.textContent = 'Enter email and password'; msg.className = 'msg-e'; return; }
-  msg.className = 'msg-ok'; msg.textContent = 'Signing in?';
+  msg.className = 'msg-ok'; msg.textContent = 'Signing in... 🔐';
   btn.disabled = true;
   try {
     await signInWithEmailAndPassword(auth, email, pass);
@@ -1211,7 +1211,7 @@ window.doLogout = async () => {
 /* -- MEMBER SELECT -- */
 window.goToMemSel = async () => {
   showScreen('memberScreen');
-  $('memScreenSub').textContent = S.fname + ' ? choose your name';
+  $('memScreenSub').textContent = S.fname + ' • choose your name';
   await loadMembers();
   renderMemGrid();
 };
@@ -1225,7 +1225,7 @@ async function loadMembers(){
 function renderMemGrid(){
   const g=$('memberGrid');
   if(!S.members.length){
-    g.innerHTML='<div class="empty-st" style="grid-column:span 2">??<p>No members yet. Add one below.</p></div>';
+    g.innerHTML='<div class="empty-st" style="grid-column:span 2">👥<p>No members yet. Add one below.</p></div>';
     return;
   }
   g.innerHTML = S.members.map((m,i)=>`
@@ -1244,7 +1244,7 @@ window.quickAdd = async () => {
   const r=push(ref(db,'members/'+S.fid));
   await set(r,{name,role:role||'Family Member',added:Date.now()});
   $('qmName').value=''; $('qmRole').value='';
-  msg.className='msg-ok'; msg.textContent='? Added!';
+  msg.className='msg-ok'; msg.textContent='👥 Added!';
   setTimeout(()=>{msg.textContent='';msg.className='msg-e';},1500);
   await loadMembers();
   renderMemGrid();
@@ -1399,7 +1399,7 @@ window.submitTx = async () => {
     $('txAmt').value=''; $('txWhere').value=''; $('txRem').value='';
     $('txCat').value=''; $('txSrc').value='';
     $('txPerson').value=S.curMem||'';
-    msg.className='msg-ok'; msg.textContent='? Added!';
+    msg.className='msg-ok'; msg.textContent='✅ Added!';
     setTimeout(()=>{msg.textContent='';msg.className='msg-e';},2000);
     toast(S.txType+' added!','ok');
   }catch(e){msg.textContent='Error: '+e.message;msg.className='msg-e';}
@@ -1503,7 +1503,7 @@ window.addMember = async () => {
   await set(r,{name,role:role||'Family Member',added:Date.now()});
   await logAction('add','Member','Added family member '+name, r.key);
   $('nmName').value=''; $('nmRole').value='';
-  msg.className='msg-ok'; msg.textContent='? Added!';
+  msg.className='msg-ok'; msg.textContent='✅ Added!';
   setTimeout(()=>{msg.textContent='';msg.className='msg-e';},2000);
   await loadMembers();
   populateDropdowns();
@@ -1542,7 +1542,7 @@ function populateDropdowns(){
   const opt=(n,sel)=>`<option value="${n}"${n===sel?' selected':''}>${n}</option>`;
   $('txPerson').innerHTML='<option value="">Select member...</option>'+names.map(n=>opt(n,S.curMem)).join('');
   // Merged income source dropdown with standard sources + family members for gifts
-  $('txSrc').innerHTML='<option value="">Select income source...</option><option>?? Salary</option><option value="?? Gift">?? Gift</option>'+names.map(n=>`<option value="${n}">?? Money from ${n}</option>`).join('');
+  $('txSrc').innerHTML='<option value="">Select income source...</option><option>💰 Salary</option><option value="🎁 Gift">🎁 Gift</option>'+names.map(n=>`<option value="${n}">💸 Money from ${n}</option>`).join('');
   $('hfMem').innerHTML='<option value="">All Members</option>'+names.map(n=>`<option>${n}</option>`).join('');
   $('cfMem').innerHTML='<option value="">All Members</option>'+names.map(n=>`<option>${n}</option>`).join('');
   $('lfMem').innerHTML='<option value="">All Members</option>'+names.map(n=>`<option>${n}</option>`).join('');
