@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -988,19 +988,7 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;}
               <option>💆 Personal Care</option><option>📌 Other</option>
             </select>
           </div>
-          <div class="fg-item" id="fSrc" style="display:none">
-            <label class="lbl">Income Source</label>
-            <select class="field" id="txSrc">
-              <option value="">Select source...</option>
-              <option>💼 Salary</option><option>� Gift</option>
-            </select>
-          </div>
-          <div class="fg-item" id="fSrcMem" style="display:none">
-            <label class="lbl">From Family Member</label>
-            <select class="field" id="txSrcMem">
-              <option value="">Select member...</option>
-            </select>
-          </div>
+          <div class="fg-item" id="fSrc" style="display:none"><label class="lbl">Income Source</label><select class="field" id="txSrc"><option value="">Select income source...</option></select></div>
           <div class="fg-item fg-full" id="fWhere" style="display:block">
             <label class="lbl" id="whereLabel">Where Spent</label>
             <input class="field" id="txWhere" placeholder="e.g. Big Bazaar, Petrol Pump">
@@ -1369,7 +1357,6 @@ window.setTxType = type => {
   $('ttInc').className='tt-btn'+(type==='Income'?' active-income':'');
   $('fCat').style.display=type==='Expense'?'flex':'none';
   $('fSrc').style.display=type==='Income'?'flex':'none';
-  $('fSrcMem').style.display=type==='Income'?'flex':'none';
   $('fWhere').style.display=type==='Expense'?'block':'none';
   $('whereLabel').textContent=type==='Income'?'Where / From':'Where Spent';
 };
@@ -1391,16 +1378,23 @@ window.submitTx = async () => {
     data.category=cat;
   } else {
     const src=$('txSrc').value;
-    if(!src){msg.textContent='Select source';msg.className='msg-e';return;}
-    data.source=src;
-    const srcMem=$('txSrcMem').value;
-    if(src==='🎁 Gift' && srcMem) data.fromMember=srcMem;
+    if(!src){msg.textContent='Select income source';msg.className='msg-e';return;}
+    // Check if it's a standard source (Salary) or a family member (Gift from someone)
+    if(src.includes('Salary') || src.includes('💼')){
+      data.source='💼 Salary';
+    } else if(src.includes('Gift') || src.includes('🎁')){
+      data.source='🎁 Gift';
+    } else {
+      // It's a family member name for a gift
+      data.source='🎁 Gift';
+      data.fromMember=src;
+    }
   }
   try{
     const txRef=await push(ref(db,'transactions/'+S.fid),data);
     await logAction('add','Transaction','Added '+S.txType.toLowerCase()+' of ₹'+amt+' by '+person, txRef.key);
     $('txAmt').value=''; $('txWhere').value=''; $('txRem').value='';
-    $('txCat').value=''; $('txSrc').value=''; $('txSrcMem').value='';
+    $('txCat').value=''; $('txSrc').value='';
     $('txPerson').value=S.curMem||'';
     msg.className='msg-ok'; msg.textContent='✅ Added!';
     setTimeout(()=>{msg.textContent='';msg.className='msg-e';},2000);
@@ -1544,7 +1538,8 @@ function populateDropdowns(){
   const names=S.members.map(m=>m.name||m.id);
   const opt=(n,sel)=>`<option value="${n}"${n===sel?' selected':''}>${n}</option>`;
   $('txPerson').innerHTML='<option value="">Select member...</option>'+names.map(n=>opt(n,S.curMem)).join('');
-  $('txSrcMem').innerHTML='<option value="">Select member...</option>'+names.map(n=>`<option>${n}</option>`).join('');
+  // Merged income source dropdown with standard sources + family members for gifts
+  $('txSrc').innerHTML='<option value="">Select income source...</option><option>💼 Salary</option><option value="🎁 Gift">🎁 Gift</option>'+names.map(n=>`<option value="${n}">🎁 Gift from ${n}</option>`).join('');
   $('hfMem').innerHTML='<option value="">All Members</option>'+names.map(n=>`<option>${n}</option>`).join('');
   $('cfMem').innerHTML='<option value="">All Members</option>'+names.map(n=>`<option>${n}</option>`).join('');
   $('lfMem').innerHTML='<option value="">All Members</option>'+names.map(n=>`<option>${n}</option>`).join('');
@@ -1624,3 +1619,5 @@ async function cleanOldLogs(){
 }</script>
 </body>
 </html>
+
+
