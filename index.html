@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -66,12 +66,12 @@ h1,h2,h3,h4,h5{font-family:'Sora',sans-serif;}
 ::-webkit-scrollbar{width:3px;height:3px;}
 ::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
 
-/* ── SCREENS ── */
+/* -- SCREENS -- */
 .screen{display:none;}
 .screen.active{display:block;}
 #loginScreen.active,#memberScreen.active{display:flex;}
 
-/* ── GLOW BACKGROUNDS ── */
+/* -- GLOW BACKGROUNDS -- */
 .glow-bg{
   position:fixed;inset:0;z-index:0;pointer-events:none;
   background:
@@ -80,7 +80,7 @@ h1,h2,h3,h4,h5{font-family:'Sora',sans-serif;}
     radial-gradient(ellipse 40% 35% at 80% 20%, rgba(34,211,160,0.04) 0%,transparent 60%);
 }
 
-/* ── INPUTS & SELECTS ── */
+/* -- INPUTS & SELECTS -- */
 .field{
   width:100%;
   background:var(--surface);
@@ -107,7 +107,7 @@ label.lbl{
   margin-bottom:7px;
 }
 
-/* ── BUTTONS ── */
+/* -- BUTTONS -- */
 .btn{
   display:inline-flex;align-items:center;justify-content:center;gap:7px;
   padding:12px 22px;
@@ -135,9 +135,9 @@ label.lbl{
 .msg-ok{color:var(--green);font-size:12.5px;margin-top:6px;}
 hr.div{border:none;border-top:1px solid var(--border);margin:22px 0;}
 
-/* ═══════════════════════════════════
+/* -----------------------------------
    LOGIN SCREEN
-═══════════════════════════════════ */
+----------------------------------- */
 #loginScreen{
   min-height:100vh;
   align-items:center;justify-content:center;
@@ -171,9 +171,9 @@ hr.div{border:none;border-top:1px solid var(--border);margin:22px 0;}
 .link-text:hover{text-decoration:underline;}
 .small-hint{font-size:12px;color:var(--text2);text-align:center;}
 
-/* ═══════════════════════════════════
+/* -----------------------------------
    MEMBER SELECT SCREEN
-═══════════════════════════════════ */
+----------------------------------- */
 #memberScreen{
   min-height:100vh;
   align-items:center;justify-content:center;
@@ -248,9 +248,9 @@ hr.div{border:none;border-top:1px solid var(--border);margin:22px 0;}
 .add-member-inline h4{font-size:13px;font-weight:600;margin-bottom:12px;color:var(--text2);}
 .inline-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;}
 
-/* ═══════════════════════════════════
+/* -----------------------------------
    APP LAYOUT
-═══════════════════════════════════ */
+----------------------------------- */
 #appScreen{min-height:100vh;}
 .layout{display:flex;min-height:100vh;}
 
@@ -375,9 +375,9 @@ hr.div{border:none;border-top:1px solid var(--border);margin:22px 0;}
 .bn-ic{font-size:19px;}
 .bn.active{color:var(--gold);}
 
-/* ═══════════════════════════════════
+/* -----------------------------------
    TAB PAGES
-═══════════════════════════════════ */
+----------------------------------- */
 .tab{display:none;}
 .tab.active{display:block;animation:fadeUp .25s ease;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
@@ -405,7 +405,7 @@ hr.div{border:none;border-top:1px solid var(--border);margin:22px 0;}
 .month-pill button:hover{background:var(--surface);color:var(--text);}
 .month-pill span{font-size:13px;font-weight:600;min-width:120px;text-align:center;}
 
-/* ─── STAT CARDS ─── */
+/* --- STAT CARDS --- */
 .stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(10px,1.4vw,18px);margin-bottom:22px;}
 .scard{
   border-radius:var(--r);
@@ -444,7 +444,7 @@ hr.div{border:none;border-top:1px solid var(--border);margin:22px 0;}
   font-size:56px;opacity:.07;line-height:1;
 }
 
-/* ─── PANELS ─── */
+/* --- PANELS --- */
 .panel{
   background:var(--card);
   border:1px solid var(--border);
@@ -462,7 +462,7 @@ hr.div{border:none;border-top:1px solid var(--border);margin:22px 0;}
 .bg-gold{background:var(--gold-dim);color:var(--gold);}
 .bg-blue{background:var(--blue-dim);color:var(--blue);}
 
-/* ─── TX ITEM ─── */
+/* --- TX ITEM --- */
 .txi{
   display:flex;align-items:center;gap:12px;
   padding:10px 10px;border-radius:var(--rsm);
@@ -486,10 +486,10 @@ hr.div{border:none;border-top:1px solid var(--border);margin:22px 0;}
 .empty-st{text-align:center;padding:30px 16px;color:var(--text3);}
 .empty-st p{font-size:13px;margin-top:8px;}
 
-/* ─── 2 COL GRID ─── */
+/* --- 2 COL GRID --- */
 .two-col{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:20px;}
 
-/* ─── ADD TRANSACTION ─── */
+/* --- ADD TRANSACTION --- */
 .type-toggle{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:24px;}
 .tt-btn{
   padding:14px;border-radius:var(--rsm);
@@ -509,7 +509,7 @@ hr.div{border:none;border-top:1px solid var(--border);margin:22px 0;}
 .fg-full{grid-column:span 2;}
 .fg-item{display:flex;flex-direction:column;}
 
-/* ─── HISTORY ─── */
+/* --- HISTORY --- */
 .fbar{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin-bottom:18px;}
 .fsel{
   background:var(--card2);
@@ -545,7 +545,7 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;}
 }
 .del-btn:hover{background:var(--red-dim);color:var(--red);}
 
-/* ─── CHARTS ─── */
+/* --- CHARTS --- */
 .charts-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
 .chart-card{
   background:var(--card);
@@ -558,7 +558,7 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;}
 .chart-card canvas{max-height:250px;}
 .chart-filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;align-items:center;}
 
-/* ─── MEMBERS ─── */
+/* --- MEMBERS --- */
 .mem-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px;margin-bottom:24px;}
 .mc{
   background:var(--card);
@@ -586,7 +586,7 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;}
 }
 .add-member-panel h3{font-size:15px;font-weight:700;margin-bottom:18px;}
 
-/* ─── TOAST ─── */
+/* --- TOAST --- */
 .toast{
   position:fixed;bottom:86px;right:18px;
   background:var(--card2);border:1px solid var(--borderhi);
@@ -601,7 +601,7 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;}
 .toast.ok{border-color:rgba(34,211,160,.4);color:var(--green);}
 .toast.err{border-color:rgba(251,101,132,.4);color:var(--red);}
 
-/* ─── SPINNER ── */
+/* --- SPINNER -- */
 .spin{
   width:20px;height:20px;
   border:2px solid var(--border);
@@ -612,7 +612,7 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;}
 }
 @keyframes rot{to{transform:rotate(360deg);}}
 
-/* ─── ACTIVITY LOGS ─── */
+/* --- ACTIVITY LOGS --- */
 .log-item{
   display:flex;align-items:flex-start;gap:12px;
   padding:12px 14px;border-radius:var(--rsm);
@@ -630,12 +630,12 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;}
 .log-user{font-size:11px;color:var(--text2);}
 .no-logs{text-align:center;padding:40px 20px;color:var(--text2);}
 
-/* ═══════════════════════════════════
-   RESPONSIVE — FULLY ADAPTIVE
-   Breakpoints: 360 · 480 · 640 · 768 · 1024 · 1280 · 1440
-═══════════════════════════════════ */
+/* -----------------------------------
+   RESPONSIVE ? FULLY ADAPTIVE
+   Breakpoints: 360 ? 480 ? 640 ? 768 ? 1024 ? 1280 ? 1440
+----------------------------------- */
 
-/* ── Large desktop 1440px+ ── */
+/* -- Large desktop 1440px+ -- */
 @media(min-width:1440px){
   :root{--sidebar-w:260px;}
   .main{padding:40px 48px;}
@@ -645,20 +645,20 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;}
   .scard{padding:26px;}
 }
 
-/* ── Standard desktop 1280–1439px ── */
+/* -- Standard desktop 1280?1439px -- */
 @media(min-width:1280px) and (max-width:1439px){
   .main{padding:34px 40px;}
   .scard-amount{font-size:30px;}
 }
 
-/* ── Laptop 1024–1279px ── */
+/* -- Laptop 1024?1279px -- */
 @media(max-width:1279px){
   .main{padding:28px 32px;}
   .charts-grid{grid-template-columns:1fr 1fr;}
   .chart-card.full{grid-column:span 2;}
 }
 
-/* ── Small laptop / tablet landscape 900–1023px ── */
+/* -- Small laptop / tablet landscape 900?1023px -- */
 @media(max-width:1023px){
   :root{--sidebar-w:210px;}
   .main{padding:22px 24px;}
@@ -670,7 +670,7 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;}
   .chart-card.full{grid-column:span 1;}
 }
 
-/* ── Tablet portrait 768–899px ── */
+/* -- Tablet portrait 768?899px -- */
 @media(max-width:899px){
   :root{--sidebar-w:196px;}
   .main{padding:18px 20px;}
@@ -687,7 +687,7 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;}
   .add-member-panel{max-width:100%;}
 }
 
-/* ── Mobile: sidebar becomes drawer ── */
+/* -- Mobile: sidebar becomes drawer -- */
 @media(max-width:767px){
   :root{--sidebar-w:252px;}
   .sidebar{transform:translateX(-100%);}
@@ -740,7 +740,7 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;}
   .toast{bottom:72px;right:14px;left:14px;max-width:none;text-align:center;}
 }
 
-/* ── Small phone 480–639px ── */
+/* -- Small phone 480?639px -- */
 @media(max-width:639px){
   .main{padding:14px 14px 86px;}
   .stats-row{gap:8px;}
@@ -754,7 +754,7 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;}
   .panel{padding:14px;}
 }
 
-/* ── Compact phone: under 480px ── */
+/* -- Compact phone: under 480px -- */
 @media(max-width:479px){
   /* Login & member screens */
   .login-box,.member-box{padding:28px 18px;border-radius:20px;}
@@ -787,7 +787,7 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;}
   .tt-btn{padding:11px 8px;font-size:13px;}
 }
 
-/* ── Very small phone under 380px ── */
+/* -- Very small phone under 380px -- */
 @media(max-width:379px){
   .login-box,.member-box{padding:22px 14px;border-radius:16px;}
   .member-grid{grid-template-columns:1fr;}
@@ -808,13 +808,13 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;}
 <div class="glow-bg"></div>
 <div class="toast" id="toast"></div>
 
-<!-- ══════════════════════════════════
+<!-- ----------------------------------
      LOGIN SCREEN
-══════════════════════════════════ -->
+---------------------------------- -->
 <div id="loginScreen" class="screen active">
   <div class="login-box">
     <div class="login-logo">
-      <div class="badge">💰</div>
+      <div class="badge">??</div>
       <h1>Family Budget</h1>
       <p>Track your family's money together</p>
     </div>
@@ -828,19 +828,19 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;}
         <label class="lbl">Password</label>
         <input class="field" id="lp" type="password" placeholder="Enter password" autocomplete="current-password">
       </div>
-      <button class="btn btn-gold" id="loginBtn" onclick="doLogin()">Login →</button>
+      <button class="btn btn-gold" id="loginBtn" onclick="doLogin()">Login ?</button>
       <div id="lmsg" class="msg-e"></div>
     </div>
   </div>
 </div>
 
-<!-- ══════════════════════════════════
+<!-- ----------------------------------
      MEMBER SELECT SCREEN
-══════════════════════════════════ -->
+---------------------------------- -->
 <div id="memberScreen" class="screen">
   <div class="member-box">
     <div class="member-box-head">
-      <h2>Who are you? 👋</h2>
+      <h2>Who are you? ??</h2>
       <p id="memScreenSub">Choose your name to continue</p>
     </div>
     <div class="member-grid" id="memberGrid">
@@ -849,7 +849,7 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;}
 
     <!-- Always-visible quick add on member screen -->
     <div class="add-member-inline">
-      <h4>➕ Add New Member</h4>
+      <h4>? Add New Member</h4>
       <div class="inline-row">
         <div>
           <label class="lbl">Name</label>
@@ -864,13 +864,13 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;}
       <div id="qmMsg" class="msg-e"></div>
     </div>
 
-    <button class="btn btn-ghost" onclick="doLogout()">← Sign Out</button>
+    <button class="btn btn-ghost" onclick="doLogout()">? Sign Out</button>
   </div>
 </div>
 
-<!-- ══════════════════════════════════
+<!-- ----------------------------------
      MAIN APP
-══════════════════════════════════ -->
+---------------------------------- -->
 <div id="appScreen" class="screen">
   <div class="sb-overlay" id="sbOverlay" onclick="closeSb()"></div>
 
@@ -878,7 +878,7 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;}
   <aside class="sidebar" id="sidebar">
     <div class="sb-top">
       <div class="sb-brand">
-        <div class="sb-badge">💰</div>
+        <div class="sb-badge">??</div>
         <div>
           <div class="sb-title" id="sbFamilyName">Family</div>
           <div class="sb-sub" id="sbFamilySub">Budget Tracker</div>
@@ -887,13 +887,14 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;}
     </div>
     <nav class="sb-nav">
       <div class="nav-section">Navigation</div>
-      <div class="nv active" id="nv-overview" onclick="goTab('overview')"><span class="nv-icon">📊</span> Overview</div>
-      <div class="nv" id="nv-add" onclick="goTab('add')"><span class="nv-icon">➕</span> Add Transaction</div>
-      <div class="nv" id="nv-history" onclick="goTab('history')"><span class="nv-icon">📋</span> History</div>
-      <div class="nv" id="nv-charts" onclick="goTab('charts')"><span class="nv-icon">📈</span> Charts</div>
-      <div class="nv" id="nv-logs" onclick="goTab('logs')"><span class="nv-icon">📝</span> Activity Logs</div>
+      <div class="nv active" id="nv-overview" onclick="goTab('overview')"><span class="nv-icon">??</span> Overview</div>
+      <div class="nv" id="nv-add" onclick="goTab('add')"><span class="nv-icon">?</span> Add Transaction</div>
+      <div class="nv" id="nv-history" onclick="goTab('history')"><span class="nv-icon">??</span> History</div>
+      <div class="nv" id="nv-charts" onclick="goTab('charts')"><span class="nv-icon">??</span> Charts</div>
+      <div class="nv" id="nv-individual" onclick="goTab('individual')"><span class="nv-icon">??</span> Individual</div>
+      <div class="nv" id="nv-logs" onclick="goTab('logs')"><span class="nv-icon">??</span> Activity Logs</div>
       <div class="nav-section">Family</div>
-      <div class="nv" id="nv-members" onclick="goTab('members')"><span class="nv-icon">👥</span> Members</div>
+      <div class="nv" id="nv-members" onclick="goTab('members')"><span class="nv-icon">??</span> Members</div>
     </nav>
     <div class="sb-footer">
       <div class="sb-user">
@@ -910,7 +911,7 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;}
 
   <!-- TOPBAR (mobile) -->
   <div class="topbar">
-    <button class="hamburger" onclick="openSb()">☰</button>
+    <button class="hamburger" onclick="openSb()">?</button>
     <span class="tb-title" id="tbTitle">Overview</span>
     <div class="av av-32 av0" id="tbAv">?</div>
   </div>
@@ -918,55 +919,55 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;}
   <!-- MAIN -->
   <main class="main">
 
-    <!-- ══ OVERVIEW ══ -->
+    <!-- -- OVERVIEW -- -->
     <div class="tab active" id="tab-overview">
       <div class="ph">
         <div><h1>Overview</h1><p id="ovSub">Monthly summary</p></div>
         <div class="month-pill">
-          <button onclick="chMonth(-1)">‹</button>
-          <span id="mpLabel">—</span>
-          <button onclick="chMonth(1)">›</button>
+          <button onclick="chMonth(-1)">?</button>
+          <span id="mpLabel">?</span>
+          <button onclick="chMonth(1)">?</button>
         </div>
       </div>
       <div class="stats-row">
         <div class="scard scard-balance">
           <div class="scard-label"><span class="scard-dot" style="background:var(--gold)"></span>Balance</div>
-          <div class="scard-amount" id="stBal">₹0</div>
-          <div class="scard-sub">Income − Expenses</div>
-          <div class="scard-bg">⚖️</div>
+          <div class="scard-amount" id="stBal">?0</div>
+          <div class="scard-sub">Income - Expenses</div>
+          <div class="scard-bg">??</div>
         </div>
         <div class="scard scard-income">
           <div class="scard-label"><span class="scard-dot" style="background:var(--green)"></span>Income</div>
-          <div class="scard-amount" id="stInc">₹0</div>
+          <div class="scard-amount" id="stInc">?0</div>
           <div class="scard-sub" id="stIncCnt">0 transactions</div>
-          <div class="scard-bg">📈</div>
+          <div class="scard-bg">??</div>
         </div>
         <div class="scard scard-expense">
           <div class="scard-label"><span class="scard-dot" style="background:var(--red)"></span>Expenses</div>
-          <div class="scard-amount" id="stExp">₹0</div>
+          <div class="scard-amount" id="stExp">?0</div>
           <div class="scard-sub" id="stExpCnt">0 transactions</div>
-          <div class="scard-bg">📉</div>
+          <div class="scard-bg">??</div>
         </div>
       </div>
       <div class="two-col">
         <div class="panel">
-          <div class="panel-head"><span class="panel-title">Recent Income</span><span class="badge bg-green" id="recIncTotal">₹0</span></div>
-          <div id="recIncList"><div class="empty-st">📭<p>No income this month</p></div></div>
+          <div class="panel-head"><span class="panel-title">Recent Income</span><span class="badge bg-green" id="recIncTotal">?0</span></div>
+          <div id="recIncList"><div class="empty-st">??<p>No income this month</p></div></div>
         </div>
         <div class="panel">
-          <div class="panel-head"><span class="panel-title">Recent Expenses</span><span class="badge bg-red" id="recExpTotal">₹0</span></div>
-          <div id="recExpList"><div class="empty-st">📭<p>No expenses this month</p></div></div>
+          <div class="panel-head"><span class="panel-title">Recent Expenses</span><span class="badge bg-red" id="recExpTotal">?0</span></div>
+          <div id="recExpList"><div class="empty-st">??<p>No expenses this month</p></div></div>
         </div>
       </div>
     </div>
 
-    <!-- ══ ADD TRANSACTION ══ -->
+    <!-- -- ADD TRANSACTION -- -->
     <div class="tab" id="tab-add">
       <div class="ph"><div><h1>Add Transaction</h1><p>Record income or expense</p></div></div>
       <div class="panel" style="max-width:580px">
         <div class="type-toggle">
-          <button class="tt-btn active-expense" id="ttExp" onclick="setTxType('Expense')">📉 Expense</button>
-          <button class="tt-btn" id="ttInc" onclick="setTxType('Income')">📈 Income</button>
+          <button class="tt-btn active-expense" id="ttExp" onclick="setTxType('Expense')">?? Expense</button>
+          <button class="tt-btn" id="ttInc" onclick="setTxType('Income')">?? Income</button>
         </div>
         <div class="form-grid">
           <div class="fg-item">
@@ -974,18 +975,18 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;}
             <select class="field" id="txPerson"><option value="">Select member...</option></select>
           </div>
           <div class="fg-item">
-            <label class="lbl">Amount (₹)</label>
+            <label class="lbl">Amount (?)</label>
             <input class="field" type="number" id="txAmt" placeholder="0.00" min="0" step="0.01">
           </div>
           <div class="fg-item" id="fCat">
             <label class="lbl">Category</label>
             <select class="field" id="txCat">
               <option value="">Select category...</option>
-              <option>🍔 Food</option><option>🏠 Rent / Housing</option>
-              <option>💡 Utilities</option><option>🚗 Transport</option>
-              <option>🎬 Entertainment</option><option>🛍️ Shopping</option>
-              <option>🏥 Health</option><option>📚 Education</option>
-              <option>💆 Personal Care</option><option>📌 Other</option>
+              <option>?? Food</option><option>?? Rent / Housing</option>
+              <option>?? Utilities</option><option>?? Transport</option>
+              <option>?? Entertainment</option><option>??? Shopping</option>
+              <option>?? Health</option><option>?? Education</option>
+              <option>?? Personal Care</option><option>?? Other</option>
             </select>
           </div>
           <div class="fg-item" id="fSrc" style="display:none"><label class="lbl">Income Source</label><select class="field" id="txSrc"><option value="">Select income source...</option></select></div>
@@ -998,20 +999,20 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;}
             <input class="field" id="txRem" placeholder="Any notes...">
           </div>
         </div>
-        <button class="btn btn-gold" style="margin-top:10px" onclick="submitTx()">Add Transaction →</button>
+        <button class="btn btn-gold" style="margin-top:10px" onclick="submitTx()">Add Transaction ?</button>
         <div id="txMsg" class="msg-e"></div>
       </div>
     </div>
 
-    <!-- ══ HISTORY ══ -->
+    <!-- -- HISTORY -- -->
     <div class="tab" id="tab-history">
       <div class="ph"><div><h1>History</h1><p>All transactions</p></div></div>
       <div class="panel">
         <div class="fbar">
           <div class="month-pill">
-            <button onclick="chMonth(-1)">‹</button>
-            <span id="hmpLabel">—</span>
-            <button onclick="chMonth(1)">›</button>
+            <button onclick="chMonth(-1)">?</button>
+            <span id="hmpLabel">?</span>
+            <button onclick="chMonth(1)">?</button>
           </div>
           <select class="fsel" id="hfType" onchange="renderHist()"><option value="">All Types</option><option>Income</option><option>Expense</option></select>
           <select class="fsel" id="hfMem" onchange="renderHist()"><option value="">All Members</option></select>
@@ -1030,34 +1031,34 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;}
       </div>
     </div>
 
-    <!-- ══ CHARTS ══ -->
+    <!-- -- CHARTS -- -->
     <div class="tab" id="tab-charts">
       <div class="ph"><div><h1>Charts</h1><p>Visual analysis</p></div></div>
       <div class="chart-filters">
         <div class="month-pill">
-          <button onclick="chMonth(-1)">‹</button>
-          <span id="cmpLabel">—</span>
-          <button onclick="chMonth(1)">›</button>
+          <button onclick="chMonth(-1)">?</button>
+          <span id="cmpLabel">?</span>
+          <button onclick="chMonth(1)">?</button>
         </div>
         <select class="fsel" id="cfMem" onchange="renderCharts()"><option value="">All Members</option></select>
       </div>
       <div class="charts-grid">
         <div class="chart-card">
-          <h3>💸 Expense by Category</h3>
+          <h3>?? Expense by Category</h3>
           <canvas id="cPie"></canvas>
         </div>
         <div class="chart-card">
-          <h3>👥 Spending by Member</h3>
+          <h3>?? Spending by Member</h3>
           <canvas id="cBar"></canvas>
         </div>
         <div class="chart-card full">
-          <h3>📅 Income vs Expense — Last 6 Months</h3>
+          <h3>?? Income vs Expense ? Last 6 Months</h3>
           <canvas id="cLine"></canvas>
         </div>
       </div>
     </div>
 
-    <!-- ══ ACTIVITY LOGS ══ -->
+    <!-- -- ACTIVITY LOGS -- -->
     <div class="tab" id="tab-logs">
       <div class="ph"><div><h1>Activity Logs</h1><p>Track all changes and records</p></div></div>
       <div class="panel">
@@ -1069,12 +1070,12 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;}
       </div>
     </div>
 
-    <!-- ══ MEMBERS ══ -->
+    <!-- -- MEMBERS -- -->
     <div class="tab" id="tab-members">
       <div class="ph"><div><h1>Members</h1><p>Manage family members</p></div></div>
       <div class="mem-cards" id="memCards"><div class="empty-st"><div class="spin"></div></div></div>
       <div class="add-member-panel">
-        <h3>➕ Add New Member</h3>
+        <h3>? Add New Member</h3>
         <div class="fg">
           <label class="lbl">Full Name</label>
           <input class="field" id="nmName" placeholder="e.g. Kabir, Mom, Dad">
@@ -1083,7 +1084,7 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;}
           <label class="lbl">Role <span style="color:var(--text3);text-transform:none;font-weight:400">(optional)</span></label>
           <input class="field" id="nmRole" placeholder="e.g. Son, Mom, Dad">
         </div>
-        <button class="btn btn-gold" onclick="addMember()">Add Member →</button>
+        <button class="btn btn-gold" onclick="addMember()">Add Member ?</button>
         <div id="nmMsg" class="msg-e"></div>
       </div>
     </div>
@@ -1093,19 +1094,20 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;}
   <!-- BOTTOM NAV -->
   <div class="bnav">
     <div class="bnav-inner">
-      <button class="bn active" id="bn-overview" onclick="goTab('overview')"><span class="bn-ic">📊</span>Overview</button>
-      <button class="bn" id="bn-add" onclick="goTab('add')"><span class="bn-ic">➕</span>Add</button>
-      <button class="bn" id="bn-history" onclick="goTab('history')"><span class="bn-ic">📋</span>History</button>
-      <button class="bn" id="bn-charts" onclick="goTab('charts')"><span class="bn-ic">📈</span>Charts</button>
-      <button class="bn" id="bn-logs" onclick="goTab('logs')"><span class="bn-ic">📝</span>Logs</button>
-      <button class="bn" id="bn-members" onclick="goTab('members')"><span class="bn-ic">👥</span>Members</button>
+      <button class="bn active" id="bn-overview" onclick="goTab('overview')"><span class="bn-ic">??</span>Overview</button>
+      <button class="bn" id="bn-add" onclick="goTab('add')"><span class="bn-ic">?</span>Add</button>
+      <button class="bn" id="bn-history" onclick="goTab('history')"><span class="bn-ic">??</span>History</button>
+      <button class="bn" id="bn-charts" onclick="goTab('charts')"><span class="bn-ic">??</span>Charts</button>
+      <button class="bn" id="bn-individual" onclick="goTab('individual')"><span class="bn-ic">??</span>Individual</button>
+      <button class="bn" id="bn-logs" onclick="goTab('logs')"><span class="bn-ic">??</span>Logs</button>
+      <button class="bn" id="bn-members" onclick="goTab('members')"><span class="bn-ic">??</span>Members</button>
     </div>
   </div>
 </div>
 
-<!-- ══════════════════════════════════
+<!-- ----------------------------------
      FIREBASE + LOGIC
-══════════════════════════════════ -->
+---------------------------------- -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
 import { getDatabase, ref, set, get, push, onValue, remove } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-database.js";
@@ -1123,7 +1125,7 @@ const app = initializeApp({
 const db = getDatabase(app);
 const auth = getAuth(app);
 
-/* ── STATE ── */
+/* -- STATE -- */
 let S = {
   fid:null, fname:null,
   curMem:null, curMemIdx:0,
@@ -1135,12 +1137,12 @@ let S = {
 };
 
 const MN = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-const CAT_IC = {'🍔 Food':'🍔','🏠 Rent / Housing':'🏠','💡 Utilities':'💡','🚗 Transport':'🚗','🎬 Entertainment':'🎬','🛍️ Shopping':'🛍️','🏥 Health':'🏥','📚 Education':'📚','💆 Personal Care':'💆','📌 Other':'📌','💼 Salary':'💼','🏢 Business':'🏢','📦 Freelance':'📦','🏦 Investment':'🏦','🎁 Gift':'🎁'};
+const CAT_IC = {'?? Food':'??','?? Rent / Housing':'??','?? Utilities':'??','?? Transport':'??','?? Entertainment':'??','??? Shopping':'???','?? Health':'??','?? Education':'??','?? Personal Care':'??','?? Other':'??','?? Salary':'??','?? Business':'??','?? Freelance':'??','?? Investment':'??','?? Gift':'??'};
 
-/* ── HELPERS ── */
+/* -- HELPERS -- */
 const $  = id => document.getElementById(id);
 const mk = (m,y) => `${y}-${String(m+1).padStart(2,'0')}`;
-const fmt = n => '₹'+Number(n).toLocaleString('en-IN',{maximumFractionDigits:0});
+const fmt = n => '?'+Number(n).toLocaleString('en-IN',{maximumFractionDigits:0});
 const ini = n => n ? n.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase() : '?';
 const avc = i => 'av'+((i||0)%10);
 const filtByMonth = txs => txs.filter(t => t.monthKey === mk(S.month, S.year));
@@ -1150,14 +1152,14 @@ function toast(msg, type='ok'){
   setTimeout(()=>t.className='toast',2800);
 }
 
-/* ── SCREENS ── */
+/* -- SCREENS -- */
 function showScreen(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   $(id).classList.add('active');
 }
 
-/* ── AUTH ── */
-// Fixed family ID — this is a private single-family site
+/* -- AUTH -- */
+// Fixed family ID ? this is a private single-family site
 const FAMILY_ID = 'family';
 
 onAuthStateChanged(auth, user => {
@@ -1176,7 +1178,7 @@ window.doLogin = async () => {
   const msg   = $('lmsg');
   const btn   = $('loginBtn');
   if (!email || !pass) { msg.textContent = 'Enter email and password'; msg.className = 'msg-e'; return; }
-  msg.className = 'msg-ok'; msg.textContent = 'Signing in…';
+  msg.className = 'msg-ok'; msg.textContent = 'Signing in?';
   btn.disabled = true;
   try {
     await signInWithEmailAndPassword(auth, email, pass);
@@ -1206,10 +1208,10 @@ window.doLogout = async () => {
   showScreen('loginScreen');
 };
 
-/* ── MEMBER SELECT ── */
+/* -- MEMBER SELECT -- */
 window.goToMemSel = async () => {
   showScreen('memberScreen');
-  $('memScreenSub').textContent = S.fname + ' — choose your name';
+  $('memScreenSub').textContent = S.fname + ' ? choose your name';
   await loadMembers();
   renderMemGrid();
 };
@@ -1223,7 +1225,7 @@ async function loadMembers(){
 function renderMemGrid(){
   const g=$('memberGrid');
   if(!S.members.length){
-    g.innerHTML='<div class="empty-st" style="grid-column:span 2">👥<p>No members yet. Add one below.</p></div>';
+    g.innerHTML='<div class="empty-st" style="grid-column:span 2">??<p>No members yet. Add one below.</p></div>';
     return;
   }
   g.innerHTML = S.members.map((m,i)=>`
@@ -1242,7 +1244,7 @@ window.quickAdd = async () => {
   const r=push(ref(db,'members/'+S.fid));
   await set(r,{name,role:role||'Family Member',added:Date.now()});
   $('qmName').value=''; $('qmRole').value='';
-  msg.className='msg-ok'; msg.textContent='✅ Added!';
+  msg.className='msg-ok'; msg.textContent='? Added!';
   setTimeout(()=>{msg.textContent='';msg.className='msg-e';},1500);
   await loadMembers();
   renderMemGrid();
@@ -1254,7 +1256,7 @@ window.selMember = (id, name, idx) => {
   enterApp();
 };
 
-/* ── APP ── */
+/* -- APP -- */
 function enterApp(){
   showScreen('appScreen');
   $('sbFamilyName').textContent = S.fname;
@@ -1272,12 +1274,12 @@ function enterApp(){
   goTab('overview');
 }
 
-/* ── SIDEBAR ── */
+/* -- SIDEBAR -- */
 window.openSb  = ()=>{ $('sidebar').classList.add('open'); $('sbOverlay').classList.add('open'); };
 window.closeSb = ()=>{ $('sidebar').classList.remove('open'); $('sbOverlay').classList.remove('open'); };
 
-/* ── TABS ── */
-const TAB_TITLES = {overview:'Overview',add:'Add Transaction',history:'History',charts:'Charts',logs:'Activity Logs',members:'Members'};
+/* -- TABS -- */
+const TAB_TITLES = {overview:'Overview',add:'Add Transaction',history:'History',charts:'Charts',individual:'Individual',logs:'Activity Logs',members:'Members'};
 window.goTab = tab => {
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
   document.querySelectorAll('.nv,.bn').forEach(n=>n.classList.remove('active'));
@@ -1288,11 +1290,12 @@ window.goTab = tab => {
   closeSb();
   if(tab==='charts') setTimeout(renderCharts,120);
   if(tab==='history') renderHist();
+  if(tab==='individual') renderIndividual();
   if(tab==='logs') { renderLogs(); loadActiveLogs(); }
   if(tab==='members') renderMembers();
 };
 
-/* ── MONTH ── */
+/* -- MONTH -- */
 window.chMonth = dir => {
   S.month+=dir;
   if(S.month>11){S.month=0;S.year++;}
@@ -1305,7 +1308,7 @@ function updMonthLabels(){
   $('ovSub').textContent=lbl+' summary';
 }
 
-/* ── TRANSACTIONS ── */
+/* -- TRANSACTIONS -- */
 function listenTxs(){
   onValue(ref(db,'transactions/'+S.fid), snap=>{
     S.txs=[];
@@ -1324,7 +1327,7 @@ function renderAll(){
   }
 }
 
-/* ── OVERVIEW ── */
+/* -- OVERVIEW -- */
 function renderOverview(txs){
   const inc=txs.filter(t=>t.type==='Income'), exp=txs.filter(t=>t.type==='Expense');
   const tI=inc.reduce((s,t)=>s+t.amount,0), tE=exp.reduce((s,t)=>s+t.amount,0);
@@ -1334,23 +1337,23 @@ function renderOverview(txs){
   $('stIncCnt').textContent=inc.length+' transaction'+(inc.length===1?'':'s');
   $('stExpCnt').textContent=exp.length+' transaction'+(exp.length===1?'':'s');
   $('recIncTotal').textContent=fmt(tI); $('recExpTotal').textContent=fmt(tE);
-  $('recIncList').innerHTML=inc.length?inc.slice(0,6).map(txRow).join(''):'<div class="empty-st">📭<p>No income this month</p></div>';
-  $('recExpList').innerHTML=exp.length?exp.slice(0,6).map(txRow).join(''):'<div class="empty-st">📭<p>No expenses this month</p></div>';
+  $('recIncList').innerHTML=inc.length?inc.slice(0,6).map(txRow).join(''):'<div class="empty-st">??<p>No income this month</p></div>';
+  $('recExpList').innerHTML=exp.length?exp.slice(0,6).map(txRow).join(''):'<div class="empty-st">??<p>No expenses this month</p></div>';
 }
 
 function txRow(t){
-  const icon=CAT_IC[t.category]||CAT_IC[t.source]||(t.type==='Income'?'💰':'💸');
+  const icon=CAT_IC[t.category]||CAT_IC[t.source]||(t.type==='Income'?'??':'??');
   return `<div class="txi">
     <div class="txi-icon ${t.type.toLowerCase()}">${icon}</div>
     <div class="txi-info">
-      <div class="txi-name">${t.where||t.category||t.source||'—'}</div>
-      <div class="txi-meta">${t.person} · ${t.date}${t.remark?' · '+t.remark:''}</div>
+      <div class="txi-name">${t.where||t.category||t.source||'?'}</div>
+      <div class="txi-meta">${t.person} ? ${t.date}${t.remark?' ? '+t.remark:''}</div>
     </div>
     <div class="txi-amount ${t.type.toLowerCase()}">${t.type==='Income'?'+':'-'}${fmt(t.amount)}</div>
   </div>`;
 }
 
-/* ── ADD TRANSACTION ── */
+/* -- ADD TRANSACTION -- */
 window.setTxType = type => {
   S.txType=type;
   $('ttExp').className='tt-btn'+(type==='Expense'?' active-expense':'');
@@ -1380,10 +1383,10 @@ window.submitTx = async () => {
     const src=$('txSrc').value;
     if(!src){msg.textContent='Select income source';msg.className='msg-e';return;}
     // Check if it's a standard source (Salary) or a family member (Gift from someone)
-    if(src.includes('Salary') || src.includes('💼')){
-      data.source='💼 Salary';
-    } else if(src.includes('Gift') || src.includes('🎁')){
-      data.source='🎁 Gift';
+    if(src.includes('Salary') || src.includes('??')){
+      data.source='?? Salary';
+    } else if(src.includes('Gift') || src.includes('??')){
+      data.source='?? Gift';
     } else {
       // It's a family member name for a gift
       data.source='Money';
@@ -1392,17 +1395,17 @@ window.submitTx = async () => {
   }
   try{
     const txRef=await push(ref(db,'transactions/'+S.fid),data);
-    await logAction('add','Transaction','Added '+S.txType.toLowerCase()+' of ₹'+amt+' by '+person, txRef.key);
+    await logAction('add','Transaction','Added '+S.txType.toLowerCase()+' of ?'+amt+' by '+person, txRef.key);
     $('txAmt').value=''; $('txWhere').value=''; $('txRem').value='';
     $('txCat').value=''; $('txSrc').value='';
     $('txPerson').value=S.curMem||'';
-    msg.className='msg-ok'; msg.textContent='✅ Added!';
+    msg.className='msg-ok'; msg.textContent='? Added!';
     setTimeout(()=>{msg.textContent='';msg.className='msg-e';},2000);
     toast(S.txType+' added!','ok');
   }catch(e){msg.textContent='Error: '+e.message;msg.className='msg-e';}
 };
 
-/* ── HISTORY ── */
+/* -- HISTORY -- */
 window.renderHist = () => {
   let txs=filtByMonth(S.txs);
   const tf=$('hfType').value, mf=$('hfMem').value, cf=$('hfCat').value;
@@ -1415,11 +1418,11 @@ window.renderHist = () => {
     <td style="color:var(--text2);white-space:nowrap">${t.date}</td>
     <td><span class="td-pill ${t.type.toLowerCase()}">${t.type}</span></td>
     <td><b>${t.person}</b></td>
-    <td>${t.category||t.source||'—'}</td>
-    <td>${t.where||'—'}</td>
-    <td style="color:var(--text2)">${t.remark||'—'}</td>
+    <td>${t.category||t.source||'?'}</td>
+    <td>${t.where||'?'}</td>
+    <td style="color:var(--text2)">${t.remark||'?'}</td>
     <td style="text-align:right"><span class="td-amt ${t.type.toLowerCase()}">${t.type==='Income'?'+':'-'}${fmt(t.amount)}</span></td>
-    <td><button class="del-btn" onclick="delTx('${t.id}')">🗑</button></td>
+    <td><button class="del-btn" onclick="delTx('${t.id}')">??</button></td>
   </tr>`).join('');
 };
 
@@ -1427,11 +1430,11 @@ window.delTx = async id => {
   if(!confirm('Delete this transaction?')) return;
   const tx=S.txs.find(t=>t.id===id);
   await remove(ref(db,'transactions/'+S.fid+'/'+id));
-  if(tx) await logAction('delete','Transaction','Deleted '+tx.type.toLowerCase()+' of ₹'+tx.amount+' by '+tx.person, id);
+  if(tx) await logAction('delete','Transaction','Deleted '+tx.type.toLowerCase()+' of ?'+tx.amount+' by '+tx.person, id);
   toast('Deleted','ok');
 };
 
-/* ── CHARTS ── */
+/* -- CHARTS -- */
 const chartDefaults = {
   plugins:{legend:{labels:{color:'#7c85a2',padding:14,font:{size:11}}}},
   responsive:true, maintainAspectRatio:true,
@@ -1445,7 +1448,7 @@ window.renderCharts = () => {
   if(mf) txs=txs.filter(t=>t.person===mf);
   const exps=txs.filter(t=>t.type==='Expense');
 
-  // PIE — expense by category
+  // PIE ? expense by category
   const catMap={};
   exps.forEach(t=>{ const c=t.category||'Other'; catMap[c]=(catMap[c]||0)+t.amount; });
   const cLabels=Object.keys(catMap), cData=cLabels.map(k=>catMap[k]);
@@ -1457,7 +1460,7 @@ window.renderCharts = () => {
     options:{...chartDefaults,cutout:'68%'}
   });
 
-  // BAR — spending by member
+  // BAR ? spending by member
   const memMap={};
   exps.forEach(t=>{ memMap[t.person]=(memMap[t.person]||0)+t.amount; });
   const mLabels=Object.keys(memMap);
@@ -1470,7 +1473,7 @@ window.renderCharts = () => {
       scales:{x:{ticks:tickOpts,grid:{display:false}},y:{ticks:{...tickOpts,callback:v=>fmt(v)},grid:gridOpts}}}
   });
 
-  // LINE — 6 months income vs expense
+  // LINE ? 6 months income vs expense
   const months6=[];
   for(let i=5;i>=0;i--){
     let m=S.month-i, y=S.year;
@@ -1490,7 +1493,7 @@ window.renderCharts = () => {
   });
 };
 
-/* ── MEMBERS ── */
+/* -- MEMBERS -- */
 window.addMember = async () => {
   const name=$('nmName').value.trim(), role=$('nmRole').value.trim();
   const msg=$('nmMsg');
@@ -1500,7 +1503,7 @@ window.addMember = async () => {
   await set(r,{name,role:role||'Family Member',added:Date.now()});
   await logAction('add','Member','Added family member '+name, r.key);
   $('nmName').value=''; $('nmRole').value='';
-  msg.className='msg-ok'; msg.textContent='✅ Added!';
+  msg.className='msg-ok'; msg.textContent='? Added!';
   setTimeout(()=>{msg.textContent='';msg.className='msg-e';},2000);
   await loadMembers();
   populateDropdowns();
@@ -1519,7 +1522,7 @@ window.delMember = async (id,name) => {
 async function renderMembers(){
   await loadMembers();
   const g=$('memCards');
-  if(!S.members.length){g.innerHTML='<div class="empty-st">👥<p>No members yet</p></div>';return;}
+  if(!S.members.length){g.innerHTML='<div class="empty-st">??<p>No members yet</p></div>';return;}
   g.innerHTML=S.members.map((m,i)=>{
     const txCnt=S.txs.filter(t=>t.person===m.name).length;
     const spent=S.txs.filter(t=>t.person===m.name&&t.type==='Expense').reduce((s,t)=>s+t.amount,0);
@@ -1539,7 +1542,7 @@ function populateDropdowns(){
   const opt=(n,sel)=>`<option value="${n}"${n===sel?' selected':''}>${n}</option>`;
   $('txPerson').innerHTML='<option value="">Select member...</option>'+names.map(n=>opt(n,S.curMem)).join('');
   // Merged income source dropdown with standard sources + family members for gifts
-  $('txSrc').innerHTML='<option value="">Select income source...</option><option>💼 Salary</option><option value="🎁 Gift">🎁 Gift</option>'+names.map(n=>`<option value="${n}">🎁 Gift from ${n}</option>`).join('');
+  $('txSrc').innerHTML='<option value="">Select income source...</option><option>?? Salary</option><option value="?? Gift">?? Gift</option>'+names.map(n=>`<option value="${n}">?? Money from ${n}</option>`).join('');
   $('hfMem').innerHTML='<option value="">All Members</option>'+names.map(n=>`<option>${n}</option>`).join('');
   $('cfMem').innerHTML='<option value="">All Members</option>'+names.map(n=>`<option>${n}</option>`).join('');
   $('lfMem').innerHTML='<option value="">All Members</option>'+names.map(n=>`<option>${n}</option>`).join('');
@@ -1550,7 +1553,7 @@ function populateDropdowns(){
 // Init
 window.setTxType('Expense');
 
-/* ── ACTIVITY LOGGING ── */
+/* -- ACTIVITY LOGGING -- */
 async function logAction(actionType, entityType, description, entityId=''){
   const now=new Date();
   const logEntry={
@@ -1580,7 +1583,7 @@ async function loadActiveLogs(){
 
 window.renderLogs = () => {
   if(!window.S_logs || !window.S_logs.length){
-    $('logsContainer').innerHTML='<div class="no-logs">📭<p>No activity logs yet</p></div>';
+    $('logsContainer').innerHTML='<div class="no-logs">??<p>No activity logs yet</p></div>';
     return;
   }
   let logs=window.S_logs;
@@ -1588,14 +1591,14 @@ window.renderLogs = () => {
   if(mf) logs=logs.filter(l=>l.member===mf);
   if(tf) logs=logs.filter(l=>l.actionType===tf);
   if(!logs.length){
-    $('logsContainer').innerHTML='<div class="no-logs">📭<p>No logs match your filters</p></div>';
+    $('logsContainer').innerHTML='<div class="no-logs">??<p>No logs match your filters</p></div>';
     return;
   }
-  const typeIcons={add:'✅',delete:'🗑️',update:'✏️'};
+  const typeIcons={add:'?',delete:'???',update:'??'};
   $('logsContainer').innerHTML=logs.slice(0,50).map(l=>`
     <div class="log-item">
       <div class="log-time">${l.time}</div>
-      <span class="log-badge ${l.actionType}">${typeIcons[l.actionType]||'•'} ${l.actionType}</span>
+      <span class="log-badge ${l.actionType}">${typeIcons[l.actionType]||'?'} ${l.actionType}</span>
       <div class="log-content">
         <div class="log-text">${l.description}</div>
         <div class="log-user">by ${l.member}</div>
@@ -1619,5 +1622,11 @@ async function cleanOldLogs(){
 }</script>
 </body>
 </html>
+
+
+
+
+
+
 
 
