@@ -601,7 +601,7 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;}
 .toast.ok{border-color:rgba(34,211,160,.4);color:var(--green);}
 .toast.err{border-color:rgba(251,101,132,.4);color:var(--red);}
 
-/* ─── SPINNER ─── */
+/* ─── SPINNER ── */
 .spin{
   width:20px;height:20px;
   border:2px solid var(--border);
@@ -611,6 +611,24 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;}
   display:inline-block;
 }
 @keyframes rot{to{transform:rotate(360deg);}}
+
+/* ─── ACTIVITY LOGS ─── */
+.log-item{
+  display:flex;align-items:flex-start;gap:12px;
+  padding:12px 14px;border-radius:var(--rsm);
+  background:var(--surface);border:1px solid var(--border);
+  margin-bottom:10px;transition:all .2s;
+}
+.log-item:hover{background:var(--card2);}
+.log-time{font-size:11px;color:var(--text2);white-space:nowrap;min-width:70px;}
+.log-badge{font-size:11px;font-weight:700;padding:2px 8px;border-radius:4px;white-space:nowrap;}
+.log-badge.add{background:rgba(34,211,160,.2);color:#22d3a0;}
+.log-badge.delete{background:rgba(251,101,132,.2);color:#fb6584;}
+.log-badge.update{background:rgba(129,140,248,.2);color:#818cf8;}
+.log-content{flex:1;min-width:0;}
+.log-text{font-size:13px;color:var(--text);margin-bottom:4px;}
+.log-user{font-size:11px;color:var(--text2);}
+.no-logs{text-align:center;padding:40px 20px;color:var(--text2);}
 
 /* ═══════════════════════════════════
    RESPONSIVE — FULLY ADAPTIVE
@@ -873,6 +891,7 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;}
       <div class="nv" id="nv-add" onclick="goTab('add')"><span class="nv-icon">➕</span> Add Transaction</div>
       <div class="nv" id="nv-history" onclick="goTab('history')"><span class="nv-icon">📋</span> History</div>
       <div class="nv" id="nv-charts" onclick="goTab('charts')"><span class="nv-icon">📈</span> Charts</div>
+      <div class="nv" id="nv-logs" onclick="goTab('logs')"><span class="nv-icon">📝</span> Activity Logs</div>
       <div class="nav-section">Family</div>
       <div class="nv" id="nv-members" onclick="goTab('members')"><span class="nv-icon">👥</span> Members</div>
     </nav>
@@ -973,12 +992,16 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;}
             <label class="lbl">Income Source</label>
             <select class="field" id="txSrc">
               <option value="">Select source...</option>
-              <option>💼 Salary</option><option>🏢 Business</option>
-              <option>📦 Freelance</option><option>🏦 Investment</option>
-              <option>🎁 Gift</option><option>📌 Other</option>
+              <option>💼 Salary</option><option>� Gift</option>
             </select>
           </div>
-          <div class="fg-item fg-full">
+          <div class="fg-item" id="fSrcMem" style="display:none">
+            <label class="lbl">From Family Member</label>
+            <select class="field" id="txSrcMem">
+              <option value="">Select member...</option>
+            </select>
+          </div>
+          <div class="fg-item fg-full" id="fWhere" style="display:block">
             <label class="lbl" id="whereLabel">Where Spent</label>
             <input class="field" id="txWhere" placeholder="e.g. Big Bazaar, Petrol Pump">
           </div>
@@ -1046,6 +1069,18 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;}
       </div>
     </div>
 
+    <!-- ══ ACTIVITY LOGS ══ -->
+    <div class="tab" id="tab-logs">
+      <div class="ph"><div><h1>Activity Logs</h1><p>Track all changes and records</p></div></div>
+      <div class="panel">
+        <div class="fbar">
+          <select class="fsel" id="lfMem" onchange="renderLogs()"><option value="">All Members</option></select>
+          <select class="fsel" id="lfType" onchange="renderLogs()"><option value="">All Actions</option><option value="add">Added</option><option value="delete">Deleted</option><option value="update">Updated</option></select>
+        </div>
+        <div id="logsContainer"><div class="empty-st"><div class="spin"></div></div></div>
+      </div>
+    </div>
+
     <!-- ══ MEMBERS ══ -->
     <div class="tab" id="tab-members">
       <div class="ph"><div><h1>Members</h1><p>Manage family members</p></div></div>
@@ -1074,6 +1109,7 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;}
       <button class="bn" id="bn-add" onclick="goTab('add')"><span class="bn-ic">➕</span>Add</button>
       <button class="bn" id="bn-history" onclick="goTab('history')"><span class="bn-ic">📋</span>History</button>
       <button class="bn" id="bn-charts" onclick="goTab('charts')"><span class="bn-ic">📈</span>Charts</button>
+      <button class="bn" id="bn-logs" onclick="goTab('logs')"><span class="bn-ic">📝</span>Logs</button>
       <button class="bn" id="bn-members" onclick="goTab('members')"><span class="bn-ic">👥</span>Members</button>
     </div>
   </div>
@@ -1244,6 +1280,7 @@ function enterApp(){
   updMonthLabels();
   populateDropdowns();
   listenTxs();
+  loadActiveLogs();
   goTab('overview');
 }
 
@@ -1252,7 +1289,7 @@ window.openSb  = ()=>{ $('sidebar').classList.add('open'); $('sbOverlay').classL
 window.closeSb = ()=>{ $('sidebar').classList.remove('open'); $('sbOverlay').classList.remove('open'); };
 
 /* ── TABS ── */
-const TAB_TITLES = {overview:'Overview',add:'Add Transaction',history:'History',charts:'Charts',members:'Members'};
+const TAB_TITLES = {overview:'Overview',add:'Add Transaction',history:'History',charts:'Charts',logs:'Activity Logs',members:'Members'};
 window.goTab = tab => {
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
   document.querySelectorAll('.nv,.bn').forEach(n=>n.classList.remove('active'));
@@ -1263,6 +1300,7 @@ window.goTab = tab => {
   closeSb();
   if(tab==='charts') setTimeout(renderCharts,120);
   if(tab==='history') renderHist();
+  if(tab==='logs') { renderLogs(); loadActiveLogs(); }
   if(tab==='members') renderMembers();
 };
 
@@ -1331,16 +1369,18 @@ window.setTxType = type => {
   $('ttInc').className='tt-btn'+(type==='Income'?' active-income':'');
   $('fCat').style.display=type==='Expense'?'flex':'none';
   $('fSrc').style.display=type==='Income'?'flex':'none';
+  $('fSrcMem').style.display=type==='Income'?'flex':'none';
+  $('fWhere').style.display=type==='Expense'?'block':'none';
   $('whereLabel').textContent=type==='Income'?'Where / From':'Where Spent';
 };
 
 window.submitTx = async () => {
   const person=$('txPerson').value, amt=parseFloat($('txAmt').value);
-  const where=$('txWhere').value.trim(), rem=$('txRem').value.trim();
+  const where=S.txType==='Expense'?$('txWhere').value.trim():'', rem=$('txRem').value.trim();
   const msg=$('txMsg');
   if(!person){msg.textContent='Select a person';msg.className='msg-e';return;}
   if(!amt||amt<=0){msg.textContent='Enter valid amount';msg.className='msg-e';return;}
-  if(!where){msg.textContent='Enter where';msg.className='msg-e';return;}
+  if(S.txType==='Expense' && !where){msg.textContent='Enter where spent';msg.className='msg-e';return;}
   const now=new Date();
   const data={type:S.txType,person,amount:amt,where,remark:rem||'',
     date:now.toLocaleDateString('en-IN'),timestamp:Date.now(),
@@ -1353,11 +1393,14 @@ window.submitTx = async () => {
     const src=$('txSrc').value;
     if(!src){msg.textContent='Select source';msg.className='msg-e';return;}
     data.source=src;
+    const srcMem=$('txSrcMem').value;
+    if(src==='🎁 Gift' && srcMem) data.fromMember=srcMem;
   }
   try{
-    await push(ref(db,'transactions/'+S.fid),data);
+    const txRef=await push(ref(db,'transactions/'+S.fid),data);
+    await logAction('add','Transaction','Added '+S.txType.toLowerCase()+' of ₹'+amt+' by '+person, txRef.key);
     $('txAmt').value=''; $('txWhere').value=''; $('txRem').value='';
-    $('txCat').value=''; $('txSrc').value='';
+    $('txCat').value=''; $('txSrc').value=''; $('txSrcMem').value='';
     $('txPerson').value=S.curMem||'';
     msg.className='msg-ok'; msg.textContent='✅ Added!';
     setTimeout(()=>{msg.textContent='';msg.className='msg-e';},2000);
@@ -1388,7 +1431,9 @@ window.renderHist = () => {
 
 window.delTx = async id => {
   if(!confirm('Delete this transaction?')) return;
+  const tx=S.txs.find(t=>t.id===id);
   await remove(ref(db,'transactions/'+S.fid+'/'+id));
+  if(tx) await logAction('delete','Transaction','Deleted '+tx.type.toLowerCase()+' of ₹'+tx.amount+' by '+tx.person, id);
   toast('Deleted','ok');
 };
 
@@ -1459,6 +1504,7 @@ window.addMember = async () => {
   if(S.members.find(m=>m.name.toLowerCase()===name.toLowerCase())){msg.textContent='Already exists';msg.className='msg-e';return;}
   const r=push(ref(db,'members/'+S.fid));
   await set(r,{name,role:role||'Family Member',added:Date.now()});
+  await logAction('add','Member','Added family member '+name, r.key);
   $('nmName').value=''; $('nmRole').value='';
   msg.className='msg-ok'; msg.textContent='✅ Added!';
   setTimeout(()=>{msg.textContent='';msg.className='msg-e';},2000);
@@ -1471,6 +1517,7 @@ window.addMember = async () => {
 window.delMember = async (id,name) => {
   if(!confirm('Remove '+name+' from family?')) return;
   await remove(ref(db,'members/'+S.fid+'/'+id));
+  await logAction('delete','Member','Removed family member '+name, id);
   await loadMembers(); populateDropdowns(); renderMembers();
   toast('Removed '+name,'ok');
 };
@@ -1497,8 +1544,10 @@ function populateDropdowns(){
   const names=S.members.map(m=>m.name||m.id);
   const opt=(n,sel)=>`<option value="${n}"${n===sel?' selected':''}>${n}</option>`;
   $('txPerson').innerHTML='<option value="">Select member...</option>'+names.map(n=>opt(n,S.curMem)).join('');
+  $('txSrcMem').innerHTML='<option value="">Select member...</option>'+names.map(n=>`<option>${n}</option>`).join('');
   $('hfMem').innerHTML='<option value="">All Members</option>'+names.map(n=>`<option>${n}</option>`).join('');
   $('cfMem').innerHTML='<option value="">All Members</option>'+names.map(n=>`<option>${n}</option>`).join('');
+  $('lfMem').innerHTML='<option value="">All Members</option>'+names.map(n=>`<option>${n}</option>`).join('');
   const cats=[...new Set(S.txs.map(t=>t.category||t.source).filter(Boolean))];
   $('hfCat').innerHTML='<option value="">All Categories</option>'+cats.map(c=>`<option value="${c}">${c}</option>`).join('');
 }
@@ -1506,6 +1555,72 @@ function populateDropdowns(){
 // Init
 window.setTxType('Expense');
 
-</script>
+/* ── ACTIVITY LOGGING ── */
+async function logAction(actionType, entityType, description, entityId=''){
+  const now=new Date();
+  const logEntry={
+    actionType,entityType,description,entityId,
+    member:S.curMem,
+    timestamp:Date.now(),
+    date:now.toLocaleDateString('en-IN'),
+    time:now.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'})
+  };
+  try{
+    await push(ref(db,'logs/'+S.fid),logEntry);
+    await cleanOldLogs();
+  }catch(e){console.error('Log error:',e);}
+}
+
+async function loadActiveLogs(){
+  try{
+    const snap=await get(ref(db,'logs/'+S.fid));
+    if(snap.exists()){
+      const logs=[];
+      Object.keys(snap.val()).forEach(k=>logs.push({id:k,...snap.val()[k]}));
+      logs.sort((a,b)=>(b.timestamp||0)-(a.timestamp||0));
+      window.S_logs=logs;
+    }
+  }catch(e){console.error('Load logs error:',e);}
+}
+
+window.renderLogs = () => {
+  if(!window.S_logs || !window.S_logs.length){
+    $('logsContainer').innerHTML='<div class="no-logs">📭<p>No activity logs yet</p></div>';
+    return;
+  }
+  let logs=window.S_logs;
+  const mf=$('lfMem').value, tf=$('lfType').value;
+  if(mf) logs=logs.filter(l=>l.member===mf);
+  if(tf) logs=logs.filter(l=>l.actionType===tf);
+  if(!logs.length){
+    $('logsContainer').innerHTML='<div class="no-logs">📭<p>No logs match your filters</p></div>';
+    return;
+  }
+  const typeIcons={add:'✅',delete:'🗑️',update:'✏️'};
+  $('logsContainer').innerHTML=logs.slice(0,50).map(l=>`
+    <div class="log-item">
+      <div class="log-time">${l.time}</div>
+      <span class="log-badge ${l.actionType}">${typeIcons[l.actionType]||'•'} ${l.actionType}</span>
+      <div class="log-content">
+        <div class="log-text">${l.description}</div>
+        <div class="log-user">by ${l.member}</div>
+      </div>
+    </div>`).join('');
+};
+
+async function cleanOldLogs(){
+  try{
+    const snap=await get(ref(db,'logs/'+S.fid));
+    if(snap.exists()){
+      const thirtyDaysAgo=Date.now()-(30*24*60*60*1000);
+      Object.keys(snap.val()).forEach(async k=>{
+        const log=snap.val()[k];
+        if((log.timestamp||0)<thirtyDaysAgo){
+          await remove(ref(db,'logs/'+S.fid+'/'+k));
+        }
+      });
+    }
+  }catch(e){console.error('Clean logs error:',e);}
+}</script>
 </body>
 </html>
