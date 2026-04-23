@@ -1159,7 +1159,7 @@ let S = {
 };
 
 const MN = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-const CAT_IC = {'🍕 Food':'🍕','🏠 Rent / Housing':'🏠','⚡ Utilities':'⚡','🚗 Transport':'🚗','🎬 Entertainment':'🎬','🛍️ Shopping':'🛍️','🏥 Health':'🏥','📚 Education':'📚','💅 Personal Care':'💅','📦 Other':'📦','💰 Salary':'💰','💼 Business':'💼','💻 Freelance':'💻','📈 Investment':'📈','🎁 Gift':'🎁'};
+const CAT_IC = {'🍕 Food':'🍕','🏠 Rent / Housing':'🏠','⚡ Utilities':'⚡','🚗 Transport':'🚗','🎬 Entertainment':'🎬','🛍️ Shopping':'🛍️','🏥 Health':'🏥','📚 Education':'📚','💅 Personal Care':'💅','📦 Other':'📦','💰 Salary':'💰','💼 Business':'💼','💻 Freelance':'💻','📈 Investment':'📈','💸 Money':'💸'};
 
 /* -- HELPERS -- */
 const $  = id => document.getElementById(id);
@@ -1355,7 +1355,16 @@ function renderAll(){
 
 /* -- OVERVIEW -- */
 function renderOverview(txs){
-  const inc=txs.filter(t=>t.type==='Income'), exp=txs.filter(t=>t.type==='Expense');
+  const inc=txs.filter(t=>t.type==='Income');
+  const giftOut = txs.filter(t=>t.type==='Income'&&t.fromMember).map(t=>({
+    ...t,
+    type:'Expense',
+    category:'💸 Money',
+    where:'Money to '+t.person,
+    person:t.fromMember,
+    paidFrom:t.fromMember
+  }));
+  const exp=txs.filter(t=>t.type==='Expense').concat(giftOut);
   const tI=inc.reduce((s,t)=>s+t.amount,0), tE=exp.reduce((s,t)=>s+t.amount,0);
   $('stInc').textContent=fmt(tI); $('stExp').textContent=fmt(tE);
   const bal=tI-tE, bel=$('stBal');
@@ -1417,9 +1426,9 @@ window.submitTx = async () => {
   } else {
     const src=$('txSrc').value;
     if(!src){msg.textContent='Select income source';msg.className='msg-e';return;}
-    if(src.startsWith('Gift from ')){
+    if(src.startsWith('Money from ')){
       data.source='🎁 Gift';
-      data.fromMember=src.replace('Gift from ','');
+      data.fromMember=src.replace('Money from ','');
     } else {
       data.source=src;
     }
@@ -1441,7 +1450,7 @@ window.renderHist = () => {
   let txs=filtByMonth(S.txs);
   const tf=$('hfType').value, mf=$('hfMem').value, cf=$('hfCat').value;
   if(tf) txs=txs.filter(t=>t.type===tf);
-  if(mf) txs=txs.filter(t=>t.person===mf||t.paidFrom===mf);
+  if(mf) txs=txs.filter(t=>t.person===mf||t.paidFrom===mf||t.fromMember===mf);
   if(cf) txs=txs.filter(t=>(t.category||t.source||'')===cf);
   const tb=$('histBody');
   if(!txs.length){tb.innerHTML='<tr><td colspan="9" style="text-align:center;padding:30px;color:var(--text2)">No transactions found</td></tr>';return;}
@@ -1449,7 +1458,7 @@ window.renderHist = () => {
     <td style="color:var(--text2);white-space:nowrap">${t.date}</td>
     <td><span class="td-pill ${t.type.toLowerCase()}">${t.type}</span></td>
     <td><b>${t.person}</b></td>
-    <td>${t.paidFrom||'—'}</td>
+    <td>${t.paidFrom||t.fromMember||'—'}</td>
     <td>${t.category||t.source||'?'}</td>
     <td>${t.where||'?'}</td>
     <td style="color:var(--text2)">${t.remark||'?'}</td>
@@ -1470,7 +1479,7 @@ window.exportHistCSV = () => {
   let txs=filtByMonth(S.txs);
   const tf=$('hfType').value, mf=$('hfMem').value, cf=$('hfCat').value;
   if(tf) txs=txs.filter(t=>t.type===tf);
-  if(mf) txs=txs.filter(t=>t.person===mf||t.paidFrom===mf);
+  if(mf) txs=txs.filter(t=>t.person===mf||t.paidFrom===mf||t.fromMember===mf);
   if(cf) txs=txs.filter(t=>(t.category||t.source||'')===cf);
   if(!txs.length){toast('No transactions to export','err');return;}
   const headers=['Date','Type','Person','Paid From','Category/Source','Where','Remarks','Amount'];
@@ -1478,7 +1487,7 @@ window.exportHistCSV = () => {
     t.date||'',
     t.type||'',
     t.person||'',
-    t.paidFrom||'',
+    t.paidFrom||t.fromMember||'',
     t.category||t.source||'',
     t.where||'',
     t.remark||'',
@@ -1520,8 +1529,16 @@ const tickOpts = { color:'#7c85a2' };
 window.renderCharts = () => {
   const mf=$('cfMem').value;
   let txs=filtByMonth(S.txs);
-  if(mf) txs=txs.filter(t=>t.person===mf||t.paidFrom===mf);
-  const exps=txs.filter(t=>t.type==='Expense');
+  if(mf) txs=txs.filter(t=>t.person===mf||t.paidFrom===mf||t.fromMember===mf);
+  const giftOut = txs.filter(t=>t.type==='Income'&&t.fromMember).map(t=>({
+    ...t,
+    type:'Expense',
+    category:'💸 Money',
+    where:'Money to '+t.person,
+    person:t.fromMember,
+    paidFrom:t.fromMember
+  }));
+  const exps=txs.filter(t=>t.type==='Expense').concat(giftOut);
 
   // PIE ? expense by category
   const catMap={};
@@ -1556,7 +1573,11 @@ window.renderCharts = () => {
     months6.push({mk:mk(m,y),lbl:MN[m].slice(0,3)+" '"+String(y).slice(2)});
   }
   const d6i=months6.map(({mk:m})=>S.txs.filter(t=>t.monthKey===m&&t.type==='Income').reduce((s,t)=>s+t.amount,0));
-  const d6e=months6.map(({mk:m})=>S.txs.filter(t=>t.monthKey===m&&t.type==='Expense').reduce((s,t)=>s+t.amount,0));
+  const d6e=months6.map(({mk:m})=>{
+    const regular=S.txs.filter(t=>t.monthKey===m&&t.type==='Expense').reduce((s,t)=>s+t.amount,0);
+    const gifts=S.txs.filter(t=>t.monthKey===m&&t.type==='Income'&&t.fromMember).reduce((s,t)=>s+t.amount,0);
+    return regular+gifts;
+  });
   if(S.ch.line) S.ch.line.destroy();
   S.ch.line=new Chart($('cLine').getContext('2d'),{type:'bar',
     data:{labels:months6.map(m=>m.lbl),datasets:[
@@ -1599,8 +1620,8 @@ async function renderMembers(){
   const g=$('memCards');
   if(!S.members.length){g.innerHTML='<div class="empty-st">👥<p>No members yet</p></div>';return;}
   g.innerHTML=S.members.map((m,i)=>{
-    const txCnt=S.txs.filter(t=>t.person===m.name||t.paidFrom===m.name).length;
-    const spent=S.txs.filter(t=>t.paidFrom===m.name&&t.type==='Expense').reduce((s,t)=>s+t.amount,0);
+    const txCnt=S.txs.filter(t=>t.person===m.name||t.paidFrom===m.name||t.fromMember===m.name).length;
+    const spent=S.txs.filter(t=> (t.type==='Expense'&&t.person===m.name) || (t.type==='Income'&&t.fromMember===m.name)).reduce((s,t)=>s+t.amount,0);
     const earned=S.txs.filter(t=>t.person===m.name&&t.type==='Income').reduce((s,t)=>s+t.amount,0);
     return `<div class="mc">
       <div class="av av-48 ${avc(i)}" style="margin:0 auto">${ini(m.name||m.id)}</div>
@@ -1618,7 +1639,7 @@ function populateDropdowns(){
   $('txPerson').innerHTML='<option value="">Select member...</option>'+names.map(n=>opt(n,S.curMem)).join('');
   $('txPaidFrom').innerHTML='<option value="">Select funding member...</option>'+names.map(n=>opt(n)).join('');
   // Merged income source dropdown with standard sources + family members for gifts
-  $('txSrc').innerHTML='<option value="">Select income source...</option><option value="💰 Salary">💰 Salary</option><option value="🎁 Gift">🎁 Gift</option>'+names.map(n=>`<option value="Gift from ${n}">💸 Gift from ${n}</option>`).join('');
+  $('txSrc').innerHTML='<option value="">Select income source...</option><option value="💰 Salary">💰 Salary</option><option value="🎁 Gift">🎁 Gift</option>'+names.map(n=>`<option value="Money from ${n}">💸 Money from ${n}</option>`).join('');
   $('hfMem').innerHTML='<option value="">All Members</option>'+names.map(n=>`<option>${n}</option>`).join('');
   $('cfMem').innerHTML='<option value="">All Members</option>'+names.map(n=>`<option>${n}</option>`).join('');
   $('lfMem').innerHTML='<option value="">All Members</option>'+names.map(n=>`<option>${n}</option>`).join('');
@@ -1637,12 +1658,13 @@ window.renderIndividual = () => {
     return;
   }
   
-  const memTxs=S.txs.filter(t=>t.person===memName||t.paidFrom===memName);
+  const memTxs=S.txs.filter(t=>t.person===memName||t.paidFrom===memName||t.fromMember===memName);
   const mtxs=memTxs.filter(t=>t.monthKey===mk(S.month,S.year));
   const income=mtxs.filter(t=>t.type==='Income'&&t.person===memName).reduce((s,t)=>s+t.amount,0);
-  const expense=mtxs.filter(t=>t.type==='Expense'&&t.paidFrom===memName).reduce((s,t)=>s+t.amount,0);
+  const expense=mtxs.filter(t=> (t.type==='Expense'&&t.person===memName) || (t.type==='Income'&&t.fromMember===memName)).reduce((s,t)=>s+t.amount,0);
   const incomeTxs=mtxs.filter(t=>t.type==='Income'&&t.person===memName);
-  const expenseTxs=mtxs.filter(t=>t.type==='Expense'&&t.paidFrom===memName);
+  const expenseTxs=mtxs.filter(t=> (t.type==='Expense'&&t.person===memName) || (t.type==='Income'&&t.fromMember===memName));
+  const expenseTxsDisplay=expenseTxs.map(t=>t.type==='Income'&&t.fromMember?{...t,type:'Expense',category:'💸 Money',where:'Money to '+t.person,person:t.fromMember,paidFrom:t.fromMember}:t);
   
   const idx=S.members.findIndex(m=>m.name===memName);
   const avatar=`<div class="av av-48 ${avc(idx)}" style="margin:0 auto;margin-bottom:12px">${ini(memName)}</div>`;
@@ -1679,7 +1701,7 @@ window.renderIndividual = () => {
       </div>
       <div class="panel">
         <div class="panel-head"><span class="panel-title">Recent Expenses</span></div>
-        <div>${expenseTxs.length?expenseTxs.slice(0,5).map(txRow).join(''):'<div class="empty-st">🛒<p>No expenses</p></div>'}</div>
+        <div>${expenseTxsDisplay.length?expenseTxsDisplay.slice(0,5).map(txRow).join(''):'<div class="empty-st">🛒<p>No expenses</p></div>'}</div>
       </div>
     </div>
   `;
