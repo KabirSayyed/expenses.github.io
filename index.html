@@ -1355,16 +1355,10 @@ function renderAll(){
 
 /* -- OVERVIEW -- */
 function renderOverview(txs){
-  const inc=txs.filter(t=>t.type==='Income');
-  const giftOut = txs.filter(t=>t.type==='Income'&&t.fromMember).map(t=>({
-    ...t,
-    type:'Expense',
-    category:'💸 Money',
-    where:'Money to '+t.person,
-    person:t.fromMember,
-    paidFrom:t.fromMember
-  }));
-  const exp=txs.filter(t=>t.type==='Expense').concat(giftOut);
+  // External income only — internal member-to-member transfers are excluded from global stats
+  const inc=txs.filter(t=>t.type==='Income'&&!t.fromMember);
+  // Real expenses only — no synthetic giftOut inflation
+  const exp=txs.filter(t=>t.type==='Expense');
   const tI=inc.reduce((s,t)=>s+t.amount,0), tE=exp.reduce((s,t)=>s+t.amount,0);
   $('stInc').textContent=fmt(tI); $('stExp').textContent=fmt(tE);
   const bal=tI-tE, bel=$('stBal');
@@ -1372,7 +1366,9 @@ function renderOverview(txs){
   $('stIncCnt').textContent=inc.length+' transaction'+(inc.length===1?'':'s');
   $('stExpCnt').textContent=exp.length+' transaction'+(exp.length===1?'':'s');
   $('recIncTotal').textContent=fmt(tI); $('recExpTotal').textContent=fmt(tE);
-  $('recIncList').innerHTML=inc.length?inc.slice(0,6).map(txRow).join(''):'<div class="empty-st">💰<p>No income this month</p></div>';
+  // Show all income rows (external + transfers) in the list, expenses are real only
+  const allInc=txs.filter(t=>t.type==='Income');
+  $('recIncList').innerHTML=allInc.length?allInc.slice(0,6).map(txRow).join(''):'<div class="empty-st">💰<p>No income this month</p></div>';
   $('recExpList').innerHTML=exp.length?exp.slice(0,6).map(txRow).join(''):'<div class="empty-st">🛒<p>No expenses this month</p></div>';
 }
 
@@ -1530,17 +1526,13 @@ window.renderCharts = () => {
   const mf=$('cfMem').value;
   let txs=filtByMonth(S.txs);
   if(mf) txs=txs.filter(t=>t.person===mf||t.paidFrom===mf||t.fromMember===mf);
-  const giftOut = txs.filter(t=>t.type==='Income'&&t.fromMember).map(t=>({
-    ...t,
-    type:'Expense',
-    category:'💸 Money',
-    where:'Money to '+t.person,
-    person:t.fromMember,
-    paidFrom:t.fromMember
-  }));
-  const exps=txs.filter(t=>t.type==='Expense').concat(giftOut);
 
-  // PIE ? expense by category
+  // Real expenses only (no synthetic giftOut inflation)
+  const exps=txs.filter(t=>t.type==='Expense');
+  // Transfers sent by members (for bar chart attribution)
+  const transfersSent=txs.filter(t=>t.type==='Income'&&t.fromMember);
+
+  // PIE — expense by category (real expenses only)
   const catMap={};
   exps.forEach(t=>{ const c=t.category||'Other'; catMap[c]=(catMap[c]||0)+t.amount; });
   const cLabels=Object.keys(catMap), cData=cLabels.map(k=>catMap[k]);
@@ -1552,9 +1544,10 @@ window.renderCharts = () => {
     options:{...chartDefaults,cutout:'68%'}
   });
 
-  // BAR ? spending by member
+  // BAR — spending by member: attribute to paidFrom (the actual payer), plus transfers sent
   const memMap={};
   exps.forEach(t=>{ const src=t.paidFrom||t.person; memMap[src]=(memMap[src]||0)+t.amount; });
+  transfersSent.forEach(t=>{ memMap[t.fromMember]=(memMap[t.fromMember]||0)+t.amount; });
   const mLabels=Object.keys(memMap);
   const barColors=['rgba(240,180,41,.8)','rgba(129,140,248,.8)','rgba(34,211,160,.8)','rgba(251,101,132,.8)','rgba(192,132,252,.8)','rgba(45,212,191,.8)'];
   if(S.ch.bar) S.ch.bar.destroy();
@@ -1565,19 +1558,17 @@ window.renderCharts = () => {
       scales:{x:{ticks:tickOpts,grid:{display:false}},y:{ticks:{...tickOpts,callback:v=>fmt(v)},grid:gridOpts}}}
   });
 
-  // LINE ? 6 months income vs expense
+  // LINE — 6 months: external income vs real expenses
   const months6=[];
   for(let i=5;i>=0;i--){
     let m=S.month-i, y=S.year;
     if(m<0){m+=12;y--;}
     months6.push({mk:mk(m,y),lbl:MN[m].slice(0,3)+" '"+String(y).slice(2)});
   }
-  const d6i=months6.map(({mk:m})=>S.txs.filter(t=>t.monthKey===m&&t.type==='Income').reduce((s,t)=>s+t.amount,0));
-  const d6e=months6.map(({mk:m})=>{
-    const regular=S.txs.filter(t=>t.monthKey===m&&t.type==='Expense').reduce((s,t)=>s+t.amount,0);
-    const gifts=S.txs.filter(t=>t.monthKey===m&&t.type==='Income'&&t.fromMember).reduce((s,t)=>s+t.amount,0);
-    return regular+gifts;
-  });
+  // External income only (exclude internal transfers) for income line
+  const d6i=months6.map(({mk:m})=>S.txs.filter(t=>t.monthKey===m&&t.type==='Income'&&!t.fromMember).reduce((s,t)=>s+t.amount,0));
+  // Real expenses only (no synthetic gift inflation) for expense line
+  const d6e=months6.map(({mk:m})=>S.txs.filter(t=>t.monthKey===m&&t.type==='Expense').reduce((s,t)=>s+t.amount,0));
   if(S.ch.line) S.ch.line.destroy();
   S.ch.line=new Chart($('cLine').getContext('2d'),{type:'bar',
     data:{labels:months6.map(m=>m.lbl),datasets:[
@@ -1621,8 +1612,13 @@ async function renderMembers(){
   if(!S.members.length){g.innerHTML='<div class="empty-st">👥<p>No members yet</p></div>';return;}
   g.innerHTML=S.members.map((m,i)=>{
     const txCnt=S.txs.filter(t=>t.person===m.name||t.paidFrom===m.name||t.fromMember===m.name).length;
-    const spent=S.txs.filter(t=> (t.type==='Expense'&&t.person===m.name) || (t.type==='Income'&&t.fromMember===m.name)).reduce((s,t)=>s+t.amount,0);
-    const earned=S.txs.filter(t=>t.person===m.name&&t.type==='Income').reduce((s,t)=>s+t.amount,0);
+    // Funds used = expenses where this member was the actual payer + money sent to others
+    const spent=S.txs.filter(t=>
+      (t.type==='Expense'&&(t.paidFrom===m.name||((!t.paidFrom||t.paidFrom==='')&&t.person===m.name)))||
+      (t.type==='Income'&&t.fromMember===m.name)
+    ).reduce((s,t)=>s+t.amount,0);
+    // Earned = external income (salary, gift etc.) received by this member
+    const earned=S.txs.filter(t=>t.type==='Income'&&t.person===m.name&&!t.fromMember).reduce((s,t)=>s+t.amount,0);
     return `<div class="mc">
       <div class="av av-48 ${avc(i)}" style="margin:0 auto">${ini(m.name||m.id)}</div>
       <div class="mc-name">${m.name||m.id}</div>
@@ -1658,13 +1654,27 @@ window.renderIndividual = () => {
     return;
   }
   
-  const memTxs=S.txs.filter(t=>t.person===memName||t.paidFrom===memName||t.fromMember===memName);
-  const mtxs=memTxs.filter(t=>t.monthKey===mk(S.month,S.year));
-  const income=mtxs.filter(t=>t.type==='Income'&&t.person===memName).reduce((s,t)=>s+t.amount,0);
-  const expense=mtxs.filter(t=> (t.type==='Expense'&&t.person===memName) || (t.type==='Income'&&t.fromMember===memName)).reduce((s,t)=>s+t.amount,0);
+  const mtxs=S.txs.filter(t=>t.monthKey===mk(S.month,S.year));
+
+  // Income = all income where this person is the receiver (includes transfers received)
   const incomeTxs=mtxs.filter(t=>t.type==='Income'&&t.person===memName);
-  const expenseTxs=mtxs.filter(t=> (t.type==='Expense'&&t.person===memName) || (t.type==='Income'&&t.fromMember===memName));
-  const expenseTxsDisplay=expenseTxs.map(t=>t.type==='Income'&&t.fromMember?{...t,type:'Expense',category:'💸 Money',where:'Money to '+t.person,person:t.fromMember,paidFrom:t.fromMember}:t);
+  const income=incomeTxs.reduce((s,t)=>s+t.amount,0);
+
+  // Expense = money this person actually PAID OUT:
+  //   1. Expense txs where paidFrom === this member (they funded it, even for someone else)
+  //   2. Expense txs where person === this member AND no explicit paidFrom (own expense, own money)
+  //   3. Income-transfer txs where fromMember === this member (money they sent to another member)
+  const expFromPayer=mtxs.filter(t=>t.type==='Expense'&&(t.paidFrom===memName||((!t.paidFrom||t.paidFrom==='')&&t.person===memName)));
+  const expFromSent=mtxs.filter(t=>t.type==='Income'&&t.fromMember===memName);
+  const expenseTxs=[...expFromPayer,...expFromSent];
+  const expense=expenseTxs.reduce((s,t)=>s+t.amount,0);
+
+  // Display rows — convert "sent money" entries to expense-style rows
+  const expenseTxsDisplay=expenseTxs.map(t=>
+    (t.type==='Income'&&t.fromMember)
+      ?{...t,type:'Expense',category:'💸 Money',where:'Sent to '+t.person,person:t.fromMember,paidFrom:t.fromMember}
+      :t
+  );
   
   const idx=S.members.findIndex(m=>m.name===memName);
   const avatar=`<div class="av av-48 ${avc(idx)}" style="margin:0 auto;margin-bottom:12px">${ini(memName)}</div>`;
