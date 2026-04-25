@@ -1166,7 +1166,7 @@ const $  = id => document.getElementById(id);
 const mk = (m,y) => `${y}-${String(m+1).padStart(2,'0')}`;
 const fmt = n => '₹'+Number(n).toLocaleString('en-IN',{maximumFractionDigits:0});
 const ini = n => n ? n.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase() : '👤';
-const avc = i => 'av'+((i||0)%10);
+const avc = i => 'av'+(Math.max(0, i||0)%10);
 const filtByMonth = txs => txs.filter(t => t.monthKey === mk(S.month, S.year));
 
 function toast(msg, type='ok'){
@@ -1676,7 +1676,7 @@ window.renderIndividual = () => {
       :t
   );
   
-  const idx=S.members.findIndex(m=>m.name===memName);
+  const idx=S.members.findIndex(m=>(m.name||m.id)===memName);
   const avatar=`<div class="av av-48 ${avc(idx)}" style="margin:0 auto;margin-bottom:12px">${ini(memName)}</div>`;
   
   cont.innerHTML=`
@@ -1789,11 +1789,3 @@ async function cleanOldLogs(){
 }</script>
 </body>
 </html>
-
-
-
-
-
-
-
-
