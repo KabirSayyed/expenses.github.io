@@ -901,7 +901,7 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;}
         <div class="av av-32 av0" id="sbAv">👤</div>
         <div class="sb-user-info">
           <p id="sbCurMem">Guest</p>
-          <span>Active session</span>
+          <span id="sbUserRole">Active session</span>
         </div>
       </div>
       <button class="btn btn-ghost btn-xs" style="width:100%;margin-bottom:6px" onclick="goToMemSel()">Switch Member</button>
@@ -1151,6 +1151,7 @@ const auth = getAuth(app);
 let S = {
   fid:null, fname:null,
   curMem:null, curMemIdx:0,
+  userRole:'viewer',
   members:[], txs:[],
   txType:'Expense',
   month: new Date().getMonth(),
@@ -1160,6 +1161,12 @@ let S = {
 
 const MN = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 const CAT_IC = {'🍕 Food':'🍕','🏠 Rent / Housing':'🏠','⚡ Utilities':'⚡','🚗 Transport':'🚗','🎬 Entertainment':'🎬','🛍️ Shopping':'🛍️','🏥 Health':'🏥','📚 Education':'📚','💅 Personal Care':'💅','📦 Other':'📦','💰 Salary':'💰','💼 Business':'💼','💻 Freelance':'💻','📈 Investment':'📈','💸 Money':'💸'};
+
+const USER_ROLES = {
+  'kabir@example.com': 'admin',
+  'view@example.com': 'viewer'
+};
+function getRoleForEmail(email){ return USER_ROLES[email?.toLowerCase()]||null; }
 
 /* -- HELPERS -- */
 const $  = id => document.getElementById(id);
@@ -1184,10 +1191,19 @@ function showScreen(id){
 // Fixed family ID ? this is a private single-family site
 const FAMILY_ID = 'family';
 
-onAuthStateChanged(auth, user => {
+onAuthStateChanged(auth, async user => {
   if (user) {
-    S.fid   = FAMILY_ID;
-    S.fname = 'Family Budget';
+    const role = getRoleForEmail(user.email||'');
+    if (!role) {
+      await signOut(auth);
+      showScreen('loginScreen');
+      const msg = $('lmsg');
+      if (msg) { msg.textContent = 'Access restricted to Kabir and View user accounts.'; msg.className = 'msg-e'; }
+      return;
+    }
+    S.fid      = FAMILY_ID;
+    S.fname    = 'Family Budget';
+    S.userRole = role;
     goToMemSel();
   } else {
     showScreen('loginScreen');
@@ -1200,6 +1216,8 @@ window.doLogin = async () => {
   const msg   = $('lmsg');
   const btn   = $('loginBtn');
   if (!email || !pass) { msg.textContent = 'Enter email and password'; msg.className = 'msg-e'; return; }
+  const role = getRoleForEmail(email);
+  if (!role) { msg.textContent = 'Access restricted to Kabir and View user accounts.'; msg.className = 'msg-e'; return; }
   msg.className = 'msg-ok'; msg.textContent = 'Signing in... 🔐';
   btn.disabled = true;
   try {
@@ -1259,6 +1277,7 @@ function renderMemGrid(){
 }
 
 window.quickAdd = async () => {
+  if(S.userRole==='viewer'){ toast('Read-only viewer cannot add members.','err'); return; }
   const name=$('qmName').value.trim(), role=$('qmRole').value.trim();
   const msg=$('qmMsg');
   if(!name){msg.textContent='Enter a name';return;}
@@ -1274,7 +1293,7 @@ window.quickAdd = async () => {
 };
 
 window.selMember = (id, name, idx) => {
-  S.curMem=name; S.curMemId=id; S.curMemIdx=idx;
+  S.curMem=name; S.curMemIdx=idx;
   enterApp();
 };
 
@@ -1284,6 +1303,7 @@ function enterApp(){
   $('sbFamilyName').textContent = S.fname;
   $('sbFamilySub').textContent  = S.fname;
   $('sbCurMem').textContent     = S.curMem;
+  $('sbUserRole')?.textContent  = S.userRole==='admin' ? 'Administrator' : 'Read-only viewer';
   ['sbAv','tbAv'].forEach(id=>{
     const el=$(id);
     el.textContent=ini(S.curMem);
@@ -1294,7 +1314,17 @@ function enterApp(){
   prepareAddForm();
   listenTxs();
   loadActiveLogs();
+  applyAccessControls();
   goTab('overview');
+}
+
+function applyAccessControls(){
+  const isViewer = S.userRole==='viewer';
+  ['nv-add','nv-members','bn-add','bn-members'].forEach(id=>{ const el=$(id); if(el) el.style.display = isViewer ? 'none' : ''; });
+  $('tab-add').style.display = isViewer ? 'none' : '';
+  $('tab-members').style.display = isViewer ? 'none' : '';
+  document.querySelector('.add-member-inline').style.display = isViewer ? 'none' : 'block';
+  document.querySelector('.add-member-panel').style.display = isViewer ? 'none' : 'block';
 }
 
 /* -- SIDEBAR -- */
@@ -1304,6 +1334,10 @@ window.closeSb = ()=>{ $('sidebar').classList.remove('open'); $('sbOverlay').cla
 /* -- TABS -- */
 const TAB_TITLES = {overview:'Overview',add:'Add Transaction',history:'History',charts:'Charts',individual:'Individual',logs:'Activity Logs',members:'Members'};
 window.goTab = tab => {
+  if (S.userRole==='viewer' && (tab==='add' || tab==='members')) {
+    toast('View user has read-only access.','err');
+    tab = 'overview';
+  }
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
   document.querySelectorAll('.nv,.bn').forEach(n=>n.classList.remove('active'));
   $('tab-'+tab).classList.add('active');
@@ -1398,6 +1432,7 @@ window.setTxType = type => {
 };
 
 window.submitTx = async () => {
+  if(S.userRole==='viewer'){ toast('Read-only viewer cannot add transactions.','err'); return; }
   const person=$('txPerson').value;
   const amt=parseFloat($('txAmt').value);
   const paidFrom=S.txType==='Expense' ? $('txPaidFrom').value : '';
@@ -1459,7 +1494,7 @@ window.renderHist = () => {
     <td>${t.where||'?'}</td>
     <td style="color:var(--text2)">${t.remark||'?'}</td>
     <td style="text-align:right"><span class="td-amt ${t.type.toLowerCase()}">${t.type==='Income'?'+':'-'}${fmt(t.amount)}</span></td>
-    <td><button class="del-btn" onclick="delTx('${t.id}')">🗑️</button></td>
+    <td>${S.userRole==='admin'?`<button class="del-btn" onclick="delTx('${t.id}')">🗑️</button>`:'—'}</td>
   </tr>`).join('');
 };
 
@@ -1507,6 +1542,7 @@ window.prepareAddForm = () => {
 };
 
 window.delTx = async id => {
+  if(S.userRole==='viewer'){ toast('Read-only viewer cannot delete transactions.','err'); return; }
   if(!confirm('Delete this transaction?')) return;
   const tx=S.txs.find(t=>t.id===id);
   await remove(ref(db,'transactions/'+S.fid+'/'+id));
@@ -1582,6 +1618,7 @@ window.renderCharts = () => {
 
 /* -- MEMBERS -- */
 window.addMember = async () => {
+  if(S.userRole==='viewer'){ toast('Read-only viewer cannot add members.','err'); return; }
   const name=$('nmName').value.trim(), role=$('nmRole').value.trim();
   const msg=$('nmMsg');
   if(!name){msg.textContent='Enter a name';msg.className='msg-e';return;}
@@ -1599,6 +1636,7 @@ window.addMember = async () => {
 };
 
 window.delMember = async (id,name) => {
+  if(S.userRole==='viewer'){ toast('Read-only viewer cannot remove members.','err'); return; }
   if(!confirm('Remove '+name+' from family?')) return;
   await remove(ref(db,'members/'+S.fid+'/'+id));
   await logAction('delete','Member','Removed family member '+name, id);
@@ -1624,7 +1662,7 @@ async function renderMembers(){
       <div class="mc-name">${m.name||m.id}</div>
       <div class="mc-role">${m.role||'Family Member'}</div>
       <div class="mc-stats">${txCnt} transactions<br>Funds used: ${fmt(spent)}<br>Earned: ${fmt(earned)}</div>
-      <button class="mc-del" onclick="delMember('${m.id}','${m.name||m.id}')">Remove</button>
+      ${S.userRole==='admin'?`<button class="mc-del" onclick="delMember('${m.id}','${m.name||m.id}')">Remove</button>`:'<div style="margin-top:12px;font-size:12px;color:var(--text2)">Read-only viewer</div>'}
     </div>`;
   }).join('');
 }
